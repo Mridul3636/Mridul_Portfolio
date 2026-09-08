@@ -13,7 +13,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Centuries ago, mankind was slaughtered to near extinction by monstrous humanoid creatures called Titans. Eren Yeager vows to cleanse the earth of every single Titan after witnessing the fall of his hometown.",
     quote: "If you win, you live. If you lose, you die. If you don't fight, you can't win.",
     posterBg: "from-amber-900/60 to-red-950/80",
-    posterColor: "#ef4444"
+    posterColor: "#ef4444",
+    imageUrl: "/anime/aot.jpg"
   },
   {
     id: "deathnote",
@@ -27,7 +28,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "High school prodigy Light Yagami stumbles upon a notebook dropped by a Shinigami. Light embarks on a crusade to eliminate criminals, attracting the attention of enigmatic master detective L.",
     quote: "I am justice! I protect the innocent and those who fear evil.",
     posterBg: "from-zinc-900/80 to-neutral-950/90",
-    posterColor: "#38bdf8"
+    posterColor: "#38bdf8",
+    imageUrl: "/anime/deathnote.jpg"
   },
   {
     id: "vinland",
@@ -41,7 +43,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Young Thorfinn grew up listening to the stories of old sailors that had traveled the ocean and reached the place of legend, Vinland. It's the story of a true warrior who seeks peace in an era of blood.",
     quote: "You have no enemies. No one has any enemies. There is no one that it's okay for you to hurt.",
     posterBg: "from-amber-800/60 to-stone-900/80",
-    posterColor: "#f59e0b"
+    posterColor: "#f59e0b",
+    imageUrl: "/anime/vinland.jpg"
   },
   {
     id: "jjk",
@@ -55,7 +58,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Yuji Itadori swallows a cursed talisman—the finger of a demon named Ryomen Sukuna—and becomes introduced to the clandestine world of Jujutsu sorcerers to conquer evil curses.",
     quote: "Throughout heaven and earth, I alone am the honored one.",
     posterBg: "from-blue-900/60 to-purple-950/80",
-    posterColor: "#818cf8"
+    posterColor: "#818cf8",
+    imageUrl: "/anime/jjk.jpg"
   },
   {
     id: "demonslayer",
@@ -69,7 +73,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Tanjiro Kamado sets out on a dangerous journey to become a demon slayer and find a cure to turn his sister Nezuko back into a human after their family is slaughtered.",
     quote: "Set your heart ablaze. Go beyond your limits!",
     posterBg: "from-red-900/60 to-rose-950/80",
-    posterColor: "#f43f5e"
+    posterColor: "#f43f5e",
+    imageUrl: "/anime/demonslayer.jpg"
   },
   {
     id: "steinsgate",
@@ -83,7 +88,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Self-proclaimed mad scientist Rintaro Okabe accidentally invents a microwave that can send text messages to the past, triggering chain reactions that alter the fabric of world history.",
     quote: "No one knows what the future holds. That's why its potential is infinite.",
     posterBg: "from-teal-900/60 to-emerald-950/80",
-    posterColor: "#10b981"
+    posterColor: "#10b981",
+    imageUrl: "/anime/steinsgate.jpg"
   },
   {
     id: "hxh",
@@ -97,7 +103,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Gon Freecss discovers that his father didn't die but is rather a world-renowned elite Hunter. Gon embarks on the grueling Hunter Exam, forming unbreakable bonds with Killua, Kurapika, and Leorio.",
     quote: "You should enjoy the little detours to the fullest. Because that's where you'll find things more important than what you want.",
     posterBg: "from-green-900/60 to-slate-950/80",
-    posterColor: "#22c55e"
+    posterColor: "#22c55e",
+    imageUrl: "/anime/hxh.jpg"
   },
   {
     id: "edgerunners",
@@ -111,7 +118,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "In Night City, a technology-obsessed metropolis, street kid David Martinez loses everything and turns to becoming an edgerunner—a mercenary outlaw equipped with military-grade cyberware.",
     quote: "I'll take you to the moon, I promise.",
     posterBg: "from-yellow-900/60 to-cyan-950/80",
-    posterColor: "#eab308"
+    posterColor: "#eab308",
+    imageUrl: "/anime/edgerunners.jpg"
   },
   {
     id: "fmab",
@@ -125,7 +133,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Two alchemist brothers, Edward and Alphonse Elric, search for the Philosopher's Stone after a disastrous failed attempt at human transmutation destroys their bodies.",
     quote: "A lesson without pain is meaningless. For you cannot gain something without sacrificing something else in return.",
     posterBg: "from-amber-900/60 to-orange-950/80",
-    posterColor: "#ff6426"
+    posterColor: "#ff6426",
+    imageUrl: "/anime/fmab.jpg"
   },
   {
     id: "chainsawman",
@@ -139,7 +148,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Denji is a teenage boy living with a Chainsaw Devil named Pochita. When he is betrayed, Pochita merges with Denji's heart to revive him as Chainsaw Man, joining the Public Safety Devil Hunters.",
     quote: "Everybody wants my chainsaw heart! What about Denji's heart?!",
     posterBg: "from-orange-950/70 to-red-950/80",
-    posterColor: "#f97316"
+    posterColor: "#f97316",
+    imageUrl: "/anime/chainsawman.jpg"
   },
   {
     id: "sololeveling",
@@ -153,7 +163,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "In a world where hunters must battle deadly monsters, weak E-rank hunter Sung Jinwoo is left for dead in a double dungeon, only to reawaken with a mysterious quest window visible only to him.",
     quote: "Arise.",
     posterBg: "from-indigo-950/70 to-violet-950/80",
-    posterColor: "#a855f7"
+    posterColor: "#a855f7",
+    imageUrl: "/anime/sololeveling.jpg"
   },
   {
     id: "monster",
@@ -167,7 +178,8 @@ export const animeList: AnimeItem[] = [
     synopsis: "Brilliant Japanese brain surgeon Dr. Kenzo Tenma saves the life of a young boy over the town mayor. Years later, that boy turns out to be a ruthless, psychopathic mastermind.",
     quote: "The only thing all humans are equal in is death.",
     posterBg: "from-slate-900/80 to-zinc-950/90",
-    posterColor: "#94a3b8"
+    posterColor: "#94a3b8",
+    imageUrl: "/anime/monster.jpg"
   }
 ];
 
@@ -182,7 +194,8 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Sci-Fi", "Adventure", "Drama"],
     synopsis: "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.",
     mridulVerdict: "An unmatched masterpiece on gravitational physics, time dilation, and the endurance of love across space-time dimensions. Hans Zimmer's organ score is otherworldly.",
-    themeColor: "#38bdf8"
+    themeColor: "#38bdf8",
+    imageUrl: "/movies/interstellar.jpg"
   },
   {
     id: "oppenheimer",
@@ -194,7 +207,8 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Biography", "Drama", "History"],
     synopsis: "The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb during World War II, followed by political persecution in the McCarthy era.",
     mridulVerdict: "A visceral triumph of editing, sound design, and quantum tension. The Trinity test sequence and ethical cross-examinations are monumental.",
-    themeColor: "#f59e0b"
+    themeColor: "#f59e0b",
+    imageUrl: "/movies/oppenheimer.jpg"
   },
   {
     id: "inception",
@@ -206,7 +220,8 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Sci-Fi", "Action", "Psychological"],
     synopsis: "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.",
     mridulVerdict: "The gold standard of multi-tiered architectural storytelling. Zero-gravity corridor fights and mathematical dream levels.",
-    themeColor: "#ec4899"
+    themeColor: "#ec4899",
+    imageUrl: "/movies/inception.jpg"
   },
   {
     id: "breakingbad",
@@ -218,7 +233,8 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Crime", "Drama", "Thriller"],
     synopsis: "A chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine with a former student in order to secure his family's financial future.",
     mridulVerdict: "The greatest television character transformation in history. From Walter White to Heisenberg is a masterclass in tension, cause-and-effect, and moral decay.",
-    themeColor: "#10b981"
+    themeColor: "#10b981",
+    imageUrl: "/movies/breakingbad.jpg"
   },
   {
     id: "dark",
@@ -230,7 +246,8 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Sci-Fi", "Mystery", "Time Travel"],
     synopsis: "A family saga with a supernatural twist, set in a German town where the disappearance of two young children exposes the relationships among four families and a 33-year time cycle.",
     mridulVerdict: "The most immaculate, airtight time-travel paradox ever filmed. Three seasons constructed like a Swiss watch with breathtaking casting.",
-    themeColor: "#ff6426"
+    themeColor: "#ff6426",
+    imageUrl: "/movies/dark.jpg"
   },
   {
     id: "mrrobot",
@@ -242,7 +259,8 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Cyber Thriller", "Psychological", "Drama"],
     synopsis: "Elliot, a brilliant but highly unstable cyber-security engineer and vigilante hacker, becomes a key figure in a complex game of global chaos when he and his shadowy allies try to take down the corrupt corporation.",
     mridulVerdict: "The most authentic depiction of terminal commands, exploits, social engineering, and psychological dissociation ever put on screen. Essential for any developer.",
-    themeColor: "#06b6d4"
+    themeColor: "#06b6d4",
+    imageUrl: "/movies/mrrobot.jpg"
   },
   {
     id: "arcane",
@@ -254,7 +272,8 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Steampunk", "Action", "Animation", "Sci-Fi"],
     synopsis: "Set in the utopian region of Piltover and the oppressed underground of Zaun, the story follows the origins of two iconic League champions-and the power that will tear them apart.",
     mridulVerdict: "A visual and audio revolution in animation. Fortiche's painterly style combined with visceral emotional storytelling sets a new bar for modern media.",
-    themeColor: "#a855f7"
+    themeColor: "#a855f7",
+    imageUrl: "/movies/arcane.jpg"
   },
   {
     id: "fightclub",
@@ -266,6 +285,7 @@ export const watchList: MediaWatchItem[] = [
     genres: ["Drama", "Psychological Thriller", "Cult"],
     synopsis: "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
     mridulVerdict: "A razor-sharp critique of consumerism and identity. David Fincher's slick direction and unforgettable climax make it an untouchable cult classic.",
-    themeColor: "#f43f5e"
+    themeColor: "#f43f5e",
+    imageUrl: "/movies/fightclub.jpg"
   }
 ];

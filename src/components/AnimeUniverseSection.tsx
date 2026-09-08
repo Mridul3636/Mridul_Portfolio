@@ -71,9 +71,15 @@ export const AnimeUniverseSection: React.FC = () => {
       id="anime" 
       className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
-      {/* Background Chromatic Gradient: Pink + Orange accent */}
-      <div className="absolute top-1/4 right-10 w-[600px] h-[600px] bg-brand-orange/15 rounded-full blur-[170px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-10 w-[600px] h-[600px] bg-brand-pink/15 rounded-full blur-[170px] pointer-events-none -z-10" />
+      {/* Dynamic Ambient Background Glow from active theme */}
+      <div 
+        className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full blur-[180px] pointer-events-none -z-10 transition-all duration-1000 opacity-30"
+        style={{ backgroundColor: 'var(--theme-primary, #f97316)' }}
+      />
+      <div 
+        className="absolute bottom-10 left-0 w-[600px] h-[600px] rounded-full blur-[180px] pointer-events-none -z-10 transition-all duration-1000 opacity-30"
+        style={{ backgroundColor: 'var(--theme-secondary, #ec4899)' }}
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         
@@ -168,31 +174,44 @@ export const AnimeUniverseSection: React.FC = () => {
             <div
               key={anime.id}
               onClick={() => handleOpenModal(anime)}
-              className="glass-card rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-brand-orange/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between shadow-xl"
+              className="glass-card rounded-3xl p-5 sm:p-6 border border-white/10 hover:border-brand-orange/50 transition-all duration-300 cursor-pointer group flex flex-col justify-between shadow-xl"
             >
               <div>
-                {/* Poster Graphic Simulation */}
+                {/* Real High-Resolution Poster Card Image */}
                 <div 
-                  className={`w-full h-48 rounded-2xl bg-gradient-to-br ${anime.posterBg} p-5 flex flex-col justify-between relative overflow-hidden mb-6 border border-white/10 group-hover:scale-[1.02] transition-transform shadow-md`}
+                  className="w-full h-56 rounded-2xl relative overflow-hidden mb-5 border border-white/10 group-hover:scale-[1.02] transition-transform duration-300 shadow-md bg-surface-950"
                 >
-                  <div className="flex items-center justify-between">
+                  {anime.imageUrl ? (
+                    <img 
+                      src={anime.imageUrl} 
+                      alt={anime.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={`w-full h-full bg-gradient-to-br ${anime.posterBg}`} />
+                  )}
+                  {/* Readability Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-black/20 pointer-events-none" />
+
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
                     <span 
-                      className="text-[10px] font-mono px-2.5 py-1 rounded-full font-bold bg-black/60 backdrop-blur-md"
+                      className="text-[10px] font-mono px-2.5 py-1 rounded-full font-bold bg-black/70 backdrop-blur-md border border-white/10"
                       style={{ color: anime.posterColor }}
                     >
                       {anime.category}
                     </span>
-                    <span className="text-xs font-mono font-bold text-yellow-400 flex items-center gap-1 bg-black/60 px-2.5 py-1 rounded-full">
+                    <span className="text-xs font-mono font-bold text-yellow-400 flex items-center gap-1 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
                       <Star className="w-3 h-3 fill-current" />
                       {anime.score}
                     </span>
                   </div>
 
-                  <div>
-                    <span className="text-xs font-mono text-white/70 block font-medium">
+                  <div className="absolute bottom-3 left-3 right-3 z-10">
+                    <span className="text-[11px] font-mono text-white/80 block font-medium truncate">
                       {anime.studio}
                     </span>
-                    <h3 className="font-display font-black text-xl sm:text-2xl text-white">
+                    <h3 className="font-display font-black text-xl text-white truncate drop-shadow-md">
                       {anime.title}
                     </h3>
                   </div>
@@ -203,7 +222,7 @@ export const AnimeUniverseSection: React.FC = () => {
                     "{anime.quote}"
                   </p>
 
-                  <div className="flex flex-wrap gap-1.5 pt-2">
+                  <div className="flex flex-wrap gap-1.5 pt-1">
                     {anime.genre.slice(0, 2).map((g, idx) => (
                       <span key={idx} className="text-[10px] font-mono px-2.5 py-1 rounded-lg bg-surface-900 border border-white/10 text-slate-300">
                         {g}
@@ -213,7 +232,7 @@ export const AnimeUniverseSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="pt-5 mt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-slate-400">
+              <div className="pt-4 mt-5 border-t border-white/10 flex items-center justify-between text-xs font-mono text-slate-400">
                 <span>{anime.episodes}</span>
                 <span className="text-brand-orange group-hover:underline flex items-center gap-1 font-bold">
                   <span>Explore</span>
@@ -226,31 +245,47 @@ export const AnimeUniverseSection: React.FC = () => {
 
         {/* Anime Detail Modal */}
         {selectedAnime && (
-          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="glass-card max-w-xl w-full p-6 sm:p-8 rounded-3xl border border-brand-orange/40 relative animate-fadeIn space-y-6">
+          <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="glass-card max-w-2xl w-full p-6 sm:p-8 rounded-3xl border border-brand-orange/40 relative animate-fadeIn space-y-6 max-h-[90vh] overflow-y-auto">
               <button
                 onClick={handleCloseModal}
-                className="absolute top-5 right-5 p-2 rounded-full bg-surface-900 text-slate-400 hover:text-white"
+                className="absolute top-5 right-5 p-2 rounded-full bg-surface-900 text-slate-400 hover:text-white z-20"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-4">
-                <div 
-                  className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${selectedAnime.posterBg} flex items-center justify-center text-white shrink-0 border border-white/20`}
-                >
-                  <Tv className="w-8 h-8" style={{ color: selectedAnime.posterColor }} />
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                <div className="w-32 h-44 sm:w-36 sm:h-52 rounded-2xl overflow-hidden shrink-0 border border-white/20 shadow-xl bg-surface-950">
+                  {selectedAnime.imageUrl ? (
+                    <img 
+                      src={selectedAnime.imageUrl} 
+                      alt={selectedAnime.title} 
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className={`w-full h-full bg-gradient-to-br ${selectedAnime.posterBg} flex items-center justify-center text-white shrink-0 border border-white/20`}>
+                      <Tv className="w-8 h-8" style={{ color: selectedAnime.posterColor }} />
+                    </div>
+                  )}
                 </div>
-                <div>
-                  <span className="text-xs font-mono text-brand-orange font-bold">
+
+                <div className="flex-1 text-center sm:text-left">
+                  <span className="text-xs font-mono text-brand-orange font-bold block mb-1">
                     MAL Rating: {selectedAnime.score} / 10 • {selectedAnime.studio}
                   </span>
-                  <h3 className="font-display font-black text-2xl text-white">
+                  <h3 className="font-display font-black text-2xl sm:text-3xl text-white mb-1">
                     {selectedAnime.title}
                   </h3>
-                  <p className="text-xs font-mono text-slate-400">
+                  <p className="text-xs font-mono text-slate-400 mb-3">
                     {selectedAnime.japaneseTitle} • {selectedAnime.episodes}
                   </p>
+                  <div className="flex flex-wrap gap-1.5 justify-center sm:justify-start">
+                    {selectedAnime.genre.map((g, idx) => (
+                      <span key={idx} className="px-2.5 py-1 rounded-lg bg-surface-900 border border-white/10 text-xs font-mono text-slate-300">
+                        {g}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -271,14 +306,6 @@ export const AnimeUniverseSection: React.FC = () => {
                 <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed">
                   {selectedAnime.synopsis}
                 </p>
-              </div>
-
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                {selectedAnime.genre.map((g, idx) => (
-                  <span key={idx} className="px-2.5 py-1 rounded-lg bg-surface-900 border border-white/10 text-xs font-mono text-slate-300">
-                    {g}
-                  </span>
-                ))}
               </div>
             </div>
           </div>

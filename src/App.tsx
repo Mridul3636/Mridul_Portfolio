@@ -27,71 +27,45 @@ interface ThemePalette {
   name: string;
 }
 
+function hexToHsl(hex: string): { h: number; s: number; l: number } {
+  let c = hex.replace('#', '').trim();
+  if (c.length === 3) {
+    c = c.split('').map(x => x + x).join('');
+  }
+  const r = parseInt(c.substring(0, 2) || '81', 16) / 255;
+  const g = parseInt(c.substring(2, 4) || '8c', 16) / 255;
+  const b = parseInt(c.substring(4, 6) || 'f8', 16) / 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) * 60; break;
+      case g: h = ((b - r) / d + 2) * 60; break;
+      case b: h = ((r - g) / d + 4) * 60; break;
+    }
+  }
+
+  return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
+}
+
 const getThemePalette = (colorHex: string): ThemePalette => {
-  const hex = (colorHex || '#818cf8').toLowerCase();
+  const { h } = hexToHsl(colorHex || '#818cf8');
+  const h2 = (h + 45) % 360;
+  const h3 = (h + 135) % 360;
   
-  // Michael Jackson - Amber Gold / Sunset Neon
-  if (hex === '#f59e0b' || hex.includes('f59e0b') || hex.includes('d97706')) {
-    return {
-      primary: '#f59e0b',
-      secondary: '#ea580c',
-      tertiary: '#fbbf24',
-      darkBg: '#0f0802',
-      name: 'Sunset Gold'
-    };
-  }
-  
-  // Phonk / Energy Mode - Crimson Red / Lava Fire
-  if (hex === '#ef4444' || hex.includes('ef4444') || hex.includes('dc2626')) {
-    return {
-      primary: '#ef4444',
-      secondary: '#b91c1c',
-      tertiary: '#f43f5e',
-      darkBg: '#120306',
-      name: 'Crimson Surge'
-    };
-  }
-  
-  // Soft Hours (Arijit / Anuv Jain) - Romantic Rose / Cherry Blossom
-  if (hex === '#ec4899' || hex.includes('ec4899') || hex.includes('db2777')) {
-    return {
-      primary: '#ec4899',
-      secondary: '#a21caf',
-      tertiary: '#f472b6',
-      darkBg: '#12030d',
-      name: 'Rose Romance'
-    };
-  }
-  
-  // Pop Rotation (Taylor Swift) - Electric Cyan / Sky Blue
-  if (hex === '#38bdf8' || hex.includes('38bdf8') || hex.includes('0ea5e9') || hex.includes('06b6d4')) {
-    return {
-      primary: '#38bdf8',
-      secondary: '#6366f1',
-      tertiary: '#06b6d4',
-      darkBg: '#030a15',
-      name: 'Electric Cyan'
-    };
-  }
-  
-  // Indie Side (Arctic Monkeys) - Neon Emerald / Jade Mint
-  if (hex === '#10b981' || hex.includes('10b981') || hex.includes('059669')) {
-    return {
-      primary: '#10b981',
-      secondary: '#0d9488',
-      tertiary: '#34d399',
-      darkBg: '#02100b',
-      name: 'Emerald Jade'
-    };
-  }
-  
-  // Late Night (Cigarettes After Sex / Default) - Cosmic Indigo / Violet Night
   return {
-    primary: '#818cf8',
-    secondary: '#6366f1',
-    tertiary: '#a855f7',
-    darkBg: '#050716',
-    name: 'Cosmic Indigo'
+    primary: `hsl(${h}, 90%, 62%)`,
+    secondary: `hsl(${h2}, 85%, 55%)`,
+    tertiary: `hsl(${h3}, 80%, 58%)`,
+    darkBg: `hsl(${h}, 45%, 4%)`,
+    name: `Chroma-${h}`
   };
 };
 
@@ -207,47 +181,79 @@ export function App() {
       className="min-h-screen text-slate-100 selection:bg-brand-orange/30 selection:text-brand-orange relative overflow-x-hidden transition-colors duration-1000 ease-out"
       style={{ backgroundColor: palette.darkBg }}
     >
-      {/* Dynamic Chromatic Atmosphere (Morphs with every Song Change) */}
+      {/* Dynamic Chromatic Atmosphere (Morphs with every Song Change across entire page) */}
       <div 
         className="fixed inset-0 pointer-events-none -z-10 overflow-hidden transition-all duration-1000 ease-out"
         style={{
           background: `
-            radial-gradient(ellipse 110% 70% at 50% -15%, ${palette.primary}4D 0%, transparent 65%),
-            radial-gradient(circle 950px at 95% 25%, ${palette.secondary}38 0%, transparent 65%),
-            radial-gradient(circle 950px at 5% 75%, ${palette.tertiary}30 0%, transparent 65%),
-            linear-gradient(145deg, ${palette.primary}18 0%, transparent 45%, ${palette.secondary}22 100%)
+            radial-gradient(ellipse 120% 70% at 50% -10%, ${palette.primary}55 0%, transparent 65%),
+            radial-gradient(circle 900px at 0% 30%, ${palette.primary}4D 0%, transparent 60%),
+            radial-gradient(circle 900px at 100% 40%, ${palette.secondary}4D 0%, transparent 60%),
+            radial-gradient(circle 900px at 0% 75%, ${palette.tertiary}45 0%, transparent 60%),
+            radial-gradient(circle 900px at 100% 85%, ${palette.primary}45 0%, transparent 60%),
+            linear-gradient(180deg, ${palette.primary}1A 0%, transparent 35%, ${palette.secondary}1A 75%, ${palette.primary}1A 100%)
           `
         }}
       >
-        {/* Pulsing ambient orbs with rich chromatic glow */}
+        {/* Pulsing ambient orbs with rich chromatic glow spanning full viewport */}
         <div 
-          className={`absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[550px] rounded-full blur-[160px] transition-all duration-1000 ${
+          className={`absolute -top-20 left-1/2 -translate-x-1/2 w-[950px] h-[600px] rounded-full blur-[160px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-70 scale-110' : 'opacity-45 scale-100'
+          }`}
+          style={{ backgroundColor: palette.primary }}
+        />
+        {/* Left Side Gutter Vibrant Glow */}
+        <div 
+          className={`absolute top-1/4 -left-32 w-[700px] h-[700px] rounded-full blur-[180px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-65 scale-110' : 'opacity-40 scale-100'
+          }`}
+          style={{ backgroundColor: palette.primary }}
+        />
+        {/* Right Side Gutter Vibrant Glow */}
+        <div 
+          className={`absolute top-1/2 -right-32 w-[750px] h-[750px] rounded-full blur-[180px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-65 scale-110' : 'opacity-40 scale-100'
+          }`}
+          style={{ backgroundColor: palette.secondary }}
+        />
+        {/* Lower Left Gutter Vibrant Glow */}
+        <div 
+          className={`absolute bottom-1/4 -left-32 w-[700px] h-[700px] rounded-full blur-[180px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-60 scale-110' : 'opacity-35 scale-100'
+          }`}
+          style={{ backgroundColor: palette.tertiary }}
+        />
+        {/* Lower Right Gutter Vibrant Glow */}
+        <div 
+          className={`absolute bottom-10 -right-32 w-[700px] h-[700px] rounded-full blur-[180px] transition-all duration-1000 ${
             isPlayingMusic ? 'opacity-60 scale-110' : 'opacity-35 scale-100'
           }`}
           style={{ backgroundColor: palette.primary }}
         />
-        <div 
-          className={`absolute top-1/3 -right-24 w-[750px] h-[750px] rounded-full blur-[190px] transition-all duration-1000 ${
-            isPlayingMusic ? 'opacity-45 scale-105' : 'opacity-25 scale-95'
-          }`}
-          style={{ backgroundColor: palette.secondary }}
-        />
-        <div 
-          className={`absolute bottom-1/4 -left-24 w-[800px] h-[800px] rounded-full blur-[200px] transition-all duration-1000 ${
-            isPlayingMusic ? 'opacity-40 scale-105' : 'opacity-20 scale-95'
-          }`}
-          style={{ backgroundColor: palette.tertiary }}
-        />
 
         {/* Subtle dynamic grid pattern */}
         <div 
-          className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+          className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
           style={{
             backgroundImage: `radial-gradient(circle at 1px 1px, ${palette.primary} 1px, transparent 0)`,
             backgroundSize: '40px 40px'
           }}
         />
       </div>
+
+      {/* Fixed Side Gutter Edge Ambiance (guarantees marked margin areas reflect song theme) */}
+      <div 
+        className="fixed left-0 top-0 bottom-0 w-24 md:w-48 pointer-events-none -z-10 transition-all duration-1000 opacity-60"
+        style={{
+          background: `radial-gradient(ellipse at 0% 50%, ${palette.primary}66 0%, transparent 80%)`
+        }}
+      />
+      <div 
+        className="fixed right-0 top-0 bottom-0 w-24 md:w-48 pointer-events-none -z-10 transition-all duration-1000 opacity-60"
+        style={{
+          background: `radial-gradient(ellipse at 100% 50%, ${palette.secondary}66 0%, transparent 80%)`
+        }}
+      />
 
       {/* Top Floating Glass Navigation Header */}
       <Navbar activeSection={activeSection} onNavigate={handleNavigate} />

@@ -101,6 +101,7 @@ export type AnimeItem = {
   quote: string;
   posterBg: string;
   posterColor: string;
+  imageUrl?: string;
 };
 
 export type MediaWatchItem = {
@@ -114,6 +115,7 @@ export type MediaWatchItem = {
   synopsis: string;
   mridulVerdict: string;
   themeColor: string;
+  imageUrl?: string;
 };
 
 export type TerminalCommandOutput = {
