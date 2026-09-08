@@ -144,7 +144,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
       <div className="absolute top-1/3 right-10 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-emerald-500/15 via-brand-sky/10 to-transparent blur-[170px] pointer-events-none -z-10" />
 
       {/* Main Grid Content */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full z-10 my-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 w-full z-10 my-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
           
           {/* ========================================================================= */}
@@ -315,7 +315,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
       </div>
 
       {/* Bottom Metrics Ribbon */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full z-10 pt-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 w-full z-10 pt-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
           {personalInfo.stats.map((st, idx) => (
             <div 

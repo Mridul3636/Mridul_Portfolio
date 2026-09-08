@@ -76,7 +76,7 @@ export const QuickIntroSection: React.FC<QuickIntroSectionProps> = ({ onNavigate
       <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-brand-orange/10 rounded-full blur-[160px] pointer-events-none -z-10" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-yellow/10 rounded-full blur-[160px] pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">

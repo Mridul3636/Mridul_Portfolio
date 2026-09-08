@@ -18,9 +18,15 @@ import type { TrackItem } from '../types';
 import { soundEngine } from '../utils/soundEngine';
 
 export const FloatingMusicPlayer: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768;
+    }
+    return true;
+  });
+  const [showQueue, setShowQueue] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0); // Default to Apocalypse by CAS
+  const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
   const [playbackSeconds, setPlaybackSeconds] = useState<number>(0);
   const [totalSeconds, setTotalSeconds] = useState<number>(180);
   const [volume, setVolume] = useState<number>(80);
@@ -163,10 +169,10 @@ export const FloatingMusicPlayer: React.FC = () => {
     return matchCat && matchQuery;
   });
 
-  // If minimized, render circular glowing Spotify logo matching theme & Screenshot 3
+  // If minimized, render circular glowing Spotify logo matching theme
   if (!isOpen) {
     return (
-      <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50 animate-fadeIn">
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 animate-fadeIn">
         <button
           onClick={() => {
             soundEngine.playClick();
@@ -176,7 +182,7 @@ export const FloatingMusicPlayer: React.FC = () => {
             borderColor: activeColor,
             boxShadow: `0 0 25px ${activeColor}99`
           }}
-          className={`relative group w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#050914] border-2 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ${
+          className={`relative group w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-[#050914] border-2 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer ${
             isPlaying ? 'ring-4 ring-white/20' : ''
           }`}
           title={`Now Playing: ${currentTrack.title} — Click to Open Player`}
@@ -193,14 +199,14 @@ export const FloatingMusicPlayer: React.FC = () => {
           {/* Spotify Official SVG Logo */}
           <SpotifyIcon 
             style={{ color: isPlaying ? activeColor : '#1db954' }}
-            className="w-8 h-8 sm:w-9 sm:h-9 transition-transform duration-300 group-hover:scale-105" 
+            className="w-7 h-7 sm:w-9 sm:h-9 transition-transform duration-300 group-hover:scale-105" 
           />
 
           {/* Playing Status Ripple */}
           {isPlaying && (
             <span 
               style={{ backgroundColor: activeColor }}
-              className="absolute top-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#050914] animate-ping" 
+              className="absolute top-0 right-0 w-3 h-3 rounded-full border-2 border-[#050914] animate-ping" 
             />
           )}
         </button>
@@ -214,15 +220,15 @@ export const FloatingMusicPlayer: React.FC = () => {
         borderColor: `${activeColor}60`,
         boxShadow: `0 20px 50px rgba(0, 0, 0, 0.9), 0 0 35px ${activeColor}25`
       }}
-      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 w-[340px] sm:w-[410px] max-w-[calc(100vw-2rem)] rounded-3xl bg-[#070c18]/98 border-2 p-4 sm:p-5 backdrop-blur-2xl transition-all duration-500 animate-fadeIn text-white select-none"
+      className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 w-[calc(100vw-1.5rem)] sm:w-[390px] md:w-[410px] max-h-[85vh] overflow-y-auto rounded-3xl bg-[#070c18]/98 border-2 p-3.5 sm:p-5 backdrop-blur-2xl transition-all duration-500 animate-fadeIn text-white select-none scrollbar-thin scrollbar-thumb-surface-700"
     >
       
-      {/* Top Header: Dynamic Theme Indicator + Track Profile Art + Title + Close Button */}
-      <div className="flex items-start justify-between gap-3 pb-3 border-b border-white/[0.08]">
+      {/* Top Header: Dynamic Theme Indicator + Track Profile Art + Title + Controls */}
+      <div className="flex items-start justify-between gap-2.5 pb-3 border-b border-white/[0.08]">
         
-        <div className="flex items-center gap-3.5 overflow-hidden">
+        <div className="flex items-center gap-3 overflow-hidden">
           {/* Album Cover Profile Art with Vinyl Animation */}
-          <div className="relative w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl overflow-hidden border border-white/15 shadow-lg group">
+          <div className="relative w-11 h-11 sm:w-14 sm:h-14 shrink-0 rounded-2xl overflow-hidden border border-white/15 shadow-lg group">
             {currentTrack.coverUrl ? (
               <img 
                 src={currentTrack.coverUrl} 
@@ -237,7 +243,7 @@ export const FloatingMusicPlayer: React.FC = () => {
                 style={{ background: `linear-gradient(135deg, ${activeColor}40, #090f1d)` }}
                 className="w-full h-full flex items-center justify-center"
               >
-                <Disc3 className={`w-7 h-7 text-white ${isPlaying ? 'animate-spin-slow' : ''}`} />
+                <Disc3 className={`w-6 h-6 sm:w-7 sm:h-7 text-white ${isPlaying ? 'animate-spin-slow' : ''}`} />
               </div>
             )}
 
@@ -259,7 +265,7 @@ export const FloatingMusicPlayer: React.FC = () => {
                   borderColor: `${activeColor}40`,
                   backgroundColor: `${activeColor}15`
                 }}
-                className="text-[9px] font-mono px-2 py-0.5 rounded-full border font-bold uppercase tracking-wider truncate max-w-[150px]"
+                className="text-[9px] font-mono px-2 py-0.5 rounded-full border font-bold uppercase tracking-wider truncate max-w-[130px]"
               >
                 {currentTrack.playlistCategory}
               </span>
@@ -275,14 +281,29 @@ export const FloatingMusicPlayer: React.FC = () => {
             <h4 className="font-display font-bold text-sm sm:text-base text-white truncate leading-tight">
               {currentTrack.title}
             </h4>
-            <p className="text-xs font-mono text-slate-300 truncate">
+            <p className="text-[11px] sm:text-xs font-mono text-slate-300 truncate">
               {currentTrack.artist}
             </p>
           </div>
         </div>
 
-        {/* Header Action Buttons */}
+        {/* Header Action Buttons: Queue Toggle + Spotify Link + Close Button */}
         <div className="flex items-center gap-1 shrink-0">
+          <button
+            onClick={() => {
+              soundEngine.playClick();
+              setShowQueue(!showQueue);
+            }}
+            style={{
+              color: showQueue ? activeColor : undefined,
+              borderColor: showQueue ? `${activeColor}40` : undefined
+            }}
+            className="p-1.5 rounded-lg bg-surface-900/80 border border-white/10 text-slate-300 hover:text-white transition-all"
+            title={showQueue ? "Hide 150 Songs Queue" : "Show 150 Songs Queue"}
+          >
+            <ListMusic className="w-3.5 h-3.5" />
+          </button>
+
           <a
             href={`https://open.spotify.com/search/${encodeURIComponent(currentTrack.title + ' ' + currentTrack.artist)}`}
             target="_blank"
@@ -308,13 +329,13 @@ export const FloatingMusicPlayer: React.FC = () => {
       </div>
 
       {/* Main Playback Controls & Volume */}
-      <div className="flex items-center justify-between pt-3 pb-2">
+      <div className="flex items-center justify-between pt-2.5 pb-2">
         
         {/* Playback Buttons */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <button 
             onClick={handlePrevTrack}
-            className="p-2 text-slate-400 hover:text-white transition-colors active:scale-95"
+            className="p-1.5 sm:p-2 text-slate-400 hover:text-white transition-colors active:scale-95"
             title="Previous Track"
           >
             <SkipBack className="w-4 h-4" />
@@ -326,15 +347,15 @@ export const FloatingMusicPlayer: React.FC = () => {
               backgroundColor: activeColor,
               boxShadow: `0 0 20px ${activeColor}80`
             }}
-            className="w-10 h-10 rounded-full text-black flex items-center justify-center font-bold hover:scale-105 active:scale-95 transition-all cursor-pointer"
-            title={isPlaying ? 'Pause' : 'Play Song'}
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full text-black flex items-center justify-center font-bold hover:scale-105 active:scale-95 transition-all cursor-pointer"
+            title={isPlaying ? 'Pause (Spacebar)' : 'Play Song (Spacebar)'}
           >
             {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
           </button>
 
           <button 
             onClick={handleNextTrack}
-            className="p-2 text-slate-400 hover:text-white transition-colors active:scale-95"
+            className="p-1.5 sm:p-2 text-slate-400 hover:text-white transition-colors active:scale-95"
             title="Next Track"
           >
             <SkipForward className="w-4 h-4" />
@@ -342,14 +363,14 @@ export const FloatingMusicPlayer: React.FC = () => {
         </div>
 
         {/* Dynamic Vibe Tag & Volume */}
-        <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono text-slate-400 truncate max-w-[120px]">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="hidden xs:flex items-center gap-1 text-[10px] sm:text-[11px] font-mono text-slate-400 truncate max-w-[100px] sm:max-w-[120px]">
             <Sparkles style={{ color: activeColor }} className="w-3 h-3 shrink-0" />
             <span className="truncate">{currentTrack.vibe}</span>
           </div>
 
           {/* Volume Control */}
-          <div className="flex items-center gap-1.5 text-slate-400">
+          <div className="flex items-center gap-1 text-slate-400">
             <Volume2 style={{ color: activeColor }} className="w-3.5 h-3.5 shrink-0" />
             <input
               type="range"
@@ -357,7 +378,8 @@ export const FloatingMusicPlayer: React.FC = () => {
               max="100"
               value={volume}
               onChange={handleVolumeChange}
-              className="w-14 sm:w-16 h-1 bg-surface-900 accent-emerald-400 rounded-lg cursor-pointer"
+              className="w-12 sm:w-16 h-1 bg-surface-900 accent-emerald-400 rounded-lg cursor-pointer"
+              title={`Volume: ${volume}%`}
             />
           </div>
         </div>
@@ -365,8 +387,8 @@ export const FloatingMusicPlayer: React.FC = () => {
       </div>
 
       {/* Interactive Draggable Seek / Scrub Slider ("Song Tana Taani Option") */}
-      <div className="pt-1 pb-2">
-        <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1">
+      <div className="pt-0.5 pb-2">
+        <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-mono text-slate-400 mb-1">
           <span style={{ color: activeColor }} className="font-semibold">
             {formatTime(playbackSeconds)}
           </span>
@@ -395,142 +417,143 @@ export const FloatingMusicPlayer: React.FC = () => {
         </div>
       </div>
 
-      {/* Full 150-Track Queue Header & Search Filter */}
-      <div className="pt-2 border-t border-white/[0.08]">
-        
-        <div className="flex items-center justify-between mb-2 text-xs font-mono">
-          <div className="flex items-center gap-1.5 font-bold" style={{ color: activeColor }}>
-            <ListMusic className="w-3.5 h-3.5" />
-            <span>ALL TRACKS ({filteredQueue.length} / {allTracks.length})</span>
+      {/* Full 150-Track Queue Header & Search Filter & List */}
+      {showQueue && (
+        <div className="pt-2 border-t border-white/[0.08] animate-fadeIn">
+          
+          <div className="flex items-center justify-between mb-2 text-xs font-mono">
+            <div className="flex items-center gap-1.5 font-bold" style={{ color: activeColor }}>
+              <ListMusic className="w-3.5 h-3.5" />
+              <span>ALL TRACKS ({filteredQueue.length} / {allTracks.length})</span>
+            </div>
+            <span className="text-[10px] text-slate-400">Click any track to play</span>
           </div>
-          <span className="text-[10px] text-slate-400">Click any track to play</span>
-        </div>
 
-        {/* Quick Search Inside Queue */}
-        <div className="relative mb-2">
-          <Search className="w-3 h-3 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search from 150 tracks, artists, moods..."
-            className="w-full bg-surface-900/90 border border-white/10 rounded-xl pl-7 pr-3 py-1.5 text-[11px] font-mono text-white placeholder:text-slate-500 focus:outline-none focus:border-white/30"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-400 hover:text-white"
-            >
-              Clear
-            </button>
-          )}
-        </div>
-
-        {/* Category Filter Pills Inside Player */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
-          {soundtrackPlaylists.map(pl => {
-            const isCatSelected = activeCategory === pl.id;
-            return (
+          {/* Quick Search Inside Queue */}
+          <div className="relative mb-2">
+            <Search className="w-3 h-3 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search from 150 tracks, artists, moods..."
+              className="w-full bg-surface-900/90 border border-white/10 rounded-xl pl-7 pr-3 py-1.5 text-[11px] font-mono text-white placeholder:text-slate-500 focus:outline-none focus:border-white/30"
+            />
+            {searchQuery && (
               <button
-                key={pl.id}
-                onClick={() => {
-                  soundEngine.playClick();
-                  setActiveCategory(pl.id);
-                }}
-                style={{
-                  borderColor: isCatSelected ? activeColor : 'rgba(255,255,255,0.08)',
-                  backgroundColor: isCatSelected ? `${activeColor}20` : 'rgba(15, 23, 42, 0.6)',
-                  color: isCatSelected ? '#ffffff' : '#94a3b8'
-                }}
-                className="shrink-0 px-2.5 py-1 rounded-lg text-[10px] font-mono border transition-all whitespace-nowrap"
+                onClick={() => setSearchQuery('')}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono text-slate-400 hover:text-white"
               >
-                <span>{pl.icon}</span> {pl.name.replace('All 150 Tracks', 'All 150')} ({pl.count})
+                Clear
               </button>
-            );
-          })}
-        </div>
+            )}
+          </div>
 
-        {/* Scrollable 150-Track Queue List */}
-        <div className="space-y-1 max-h-[175px] sm:max-h-[190px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-surface-700">
-          {filteredQueue.map((tr) => {
-            const isCurrent = currentTrack.id === tr.id;
-            const trTheme = tr.themeColor || activeColor;
-            return (
-              <div
-                key={tr.id}
-                onClick={() => handleSelectTrack(tr.id)}
-                style={{
-                  backgroundColor: isCurrent ? `${trTheme}20` : undefined,
-                  borderColor: isCurrent ? `${trTheme}60` : 'transparent'
-                }}
-                className={`px-2 py-1.5 rounded-xl flex items-center justify-between cursor-pointer transition-all border group ${
-                  isCurrent
-                    ? 'text-white shadow-md'
-                    : 'hover:bg-white/[0.05] text-slate-300 border-transparent'
-                }`}
-              >
-                <div className="flex items-center gap-2.5 overflow-hidden">
-                  {/* Track Number / Equalizer */}
-                  {isCurrent ? (
-                    <div className="flex items-center gap-0.5 w-4 justify-center shrink-0">
-                      <span style={{ backgroundColor: trTheme }} className="w-0.5 h-3 animate-pulse" />
-                      <span style={{ backgroundColor: trTheme }} className="w-0.5 h-2 animate-pulse delay-75" />
-                    </div>
-                  ) : (
-                    <span className="text-[10px] font-mono text-slate-500 w-4 text-center shrink-0">
-                      {tr.id}
-                    </span>
-                  )}
+          {/* Category Filter Pills Inside Player */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
+            {soundtrackPlaylists.map(pl => {
+              const isCatSelected = activeCategory === pl.id;
+              return (
+                <button
+                  key={pl.id}
+                  onClick={() => {
+                    soundEngine.playClick();
+                    setActiveCategory(pl.id);
+                  }}
+                  style={{
+                    borderColor: isCatSelected ? activeColor : 'rgba(255,255,255,0.08)',
+                    backgroundColor: isCatSelected ? `${activeColor}20` : 'rgba(15, 23, 42, 0.6)',
+                    color: isCatSelected ? '#ffffff' : '#94a3b8'
+                  }}
+                  className="shrink-0 px-2.5 py-1 rounded-lg text-[10px] font-mono border transition-all whitespace-nowrap"
+                >
+                  <span>{pl.icon}</span> {pl.name.replace('All 150 Tracks', 'All 150')} ({pl.count})
+                </button>
+              );
+            })}
+          </div>
 
-                  {/* Album Cover Art Thumbnail */}
-                  <div className="w-7 h-7 rounded-lg overflow-hidden bg-surface-900 border border-white/10 shrink-0 relative">
-                    {tr.coverUrl ? (
-                      <img 
-                        src={tr.coverUrl} 
-                        alt={tr.title} 
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[10px]">
-                        <Music className="w-3.5 h-3.5 text-slate-500" />
+          {/* Scrollable 150-Track Queue List */}
+          <div className="space-y-1 max-h-[160px] sm:max-h-[190px] overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-surface-700 mt-1">
+            {filteredQueue.map((tr) => {
+              const isCurrent = currentTrack.id === tr.id;
+              const trTheme = tr.themeColor || activeColor;
+              return (
+                <div
+                  key={tr.id}
+                  onClick={() => handleSelectTrack(tr.id)}
+                  style={{
+                    backgroundColor: isCurrent ? `${trTheme}20` : undefined,
+                    borderColor: isCurrent ? `${trTheme}60` : 'transparent'
+                  }}
+                  className={`px-2 py-1.5 rounded-xl flex items-center justify-between cursor-pointer transition-all border group ${
+                    isCurrent
+                      ? 'text-white shadow-md'
+                      : 'hover:bg-white/[0.05] text-slate-300 border-transparent'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5 overflow-hidden">
+                    {/* Track Number / Equalizer */}
+                    {isCurrent ? (
+                      <div className="flex items-center gap-0.5 w-4 justify-center shrink-0">
+                        <span style={{ backgroundColor: trTheme }} className="w-0.5 h-3 animate-pulse" />
+                        <span style={{ backgroundColor: trTheme }} className="w-0.5 h-2 animate-pulse delay-75" />
                       </div>
+                    ) : (
+                      <span className="text-[10px] font-mono text-slate-500 w-4 text-center shrink-0">
+                        {tr.id}
+                      </span>
                     )}
+
+                    {/* Album Cover Art Thumbnail */}
+                    <div className="w-7 h-7 rounded-lg overflow-hidden bg-surface-900 border border-white/10 shrink-0 relative">
+                      {tr.coverUrl ? (
+                        <img 
+                          src={tr.coverUrl} 
+                          alt={tr.title} 
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-[10px]">
+                          <Music className="w-3.5 h-3.5 text-slate-500" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Title & Artist */}
+                    <div className="overflow-hidden">
+                      <p 
+                        style={{ color: isCurrent ? trTheme : undefined }}
+                        className={`text-xs font-display font-semibold truncate leading-tight ${!isCurrent ? 'text-white' : ''}`}
+                      >
+                        {tr.title}
+                      </p>
+                      <p className="text-[10px] font-mono text-slate-400 truncate">
+                        {tr.artist}
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Title & Artist */}
-                  <div className="overflow-hidden">
-                    <p 
-                      style={{ color: isCurrent ? trTheme : undefined }}
-                      className={`text-xs font-display font-semibold truncate leading-tight ${!isCurrent ? 'text-white' : ''}`}
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span className="text-[10px] font-mono text-slate-500">
+                      {tr.duration}
+                    </span>
+                    <div 
+                      style={{ backgroundColor: isCurrent ? trTheme : undefined }}
+                      className={`w-6 h-6 rounded-lg flex items-center justify-center border border-white/10 text-[10px] transition-colors ${
+                        isCurrent ? 'text-black font-bold' : 'text-slate-400 group-hover:text-white'
+                      }`}
                     >
-                      {tr.title}
-                    </p>
-                    <p className="text-[10px] font-mono text-slate-400 truncate">
-                      {tr.artist}
-                    </p>
+                      {isCurrent && isPlaying ? <Pause className="w-2.5 h-2.5 fill-current" /> : <Play className="w-2.5 h-2.5 fill-current ml-0.5" />}
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex items-center gap-2 shrink-0">
-                  <span className="text-[10px] font-mono text-slate-500">
-                    {tr.duration}
-                  </span>
-                  <div 
-                    style={{ backgroundColor: isCurrent ? trTheme : undefined }}
-                    className={`w-6 h-6 rounded-lg flex items-center justify-center border border-white/10 text-[10px] transition-colors ${
-                      isCurrent ? 'text-black font-bold' : 'text-slate-400 group-hover:text-white'
-                    }`}
-                  >
-                    {isCurrent && isPlaying ? <Pause className="w-2.5 h-2.5 fill-current" /> : <Play className="w-2.5 h-2.5 fill-current ml-0.5" />}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-
-      </div>
+      )}
 
     </div>
   );

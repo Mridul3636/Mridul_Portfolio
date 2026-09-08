@@ -204,7 +204,7 @@ export const SoundtrackSection: React.FC = () => {
       />
       <div className="absolute bottom-10 right-1/4 w-[650px] h-[650px] bg-brand-sky/15 rounded-full blur-[170px] pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
@@ -242,7 +242,7 @@ export const SoundtrackSection: React.FC = () => {
             borderColor: `${activeColor}60`,
             boxShadow: `0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px ${activeColor}30`
           }}
-          className="rounded-3xl bg-[#080d1a]/95 border-2 p-6 sm:p-10 lg:p-12 mb-12 relative overflow-hidden backdrop-blur-2xl transition-all duration-700"
+          className="rounded-3xl bg-[#080d1a]/95 border-2 p-4 sm:p-10 lg:p-12 mb-12 relative overflow-hidden backdrop-blur-2xl transition-all duration-700"
         >
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">

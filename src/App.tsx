@@ -177,6 +177,31 @@ export function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Global Spacebar Key Handler for instantaneous Play / Pause
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' || e.key === ' ') {
+        const target = e.target as HTMLElement | null;
+        const tagName = target?.tagName?.toLowerCase();
+        if (
+          tagName === 'input' ||
+          tagName === 'textarea' ||
+          tagName === 'select' ||
+          target?.isContentEditable ||
+          target?.getAttribute('role') === 'textbox'
+        ) {
+          return; // Let user type spaces naturally in input/textarea/search boxes
+        }
+        // Prevent default browser viewport page scroll on spacebar press
+        e.preventDefault();
+        soundEngine.togglePlayPause();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   return (
     <div 
       className="min-h-screen text-slate-100 selection:bg-brand-orange/30 selection:text-brand-orange relative overflow-x-hidden transition-colors duration-1000 ease-out"

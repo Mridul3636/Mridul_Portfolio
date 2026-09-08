@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Terminal as TerminalIcon, 
-  Trash2, 
-  CornerDownLeft
+  Trash2
 } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { soundEngine } from '../utils/soundEngine';
@@ -215,10 +214,10 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
       id="terminal" 
       className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-20 gap-6 sm:gap-8">
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-emerald/10 border border-brand-emerald/20 text-brand-emerald text-xs font-mono mb-4 tracking-wider uppercase">
               <TerminalIcon className="w-3.5 h-3.5" />
@@ -244,12 +243,12 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
         }`}>
           
           {/* Terminal Titlebar */}
-          <div className="flex items-center justify-between px-8 py-5 bg-surface-900 border-b border-white/10">
+          <div className="flex items-center justify-between px-4 sm:px-8 py-3.5 sm:py-5 bg-surface-900 border-b border-white/10">
             <div className="flex items-center gap-2.5">
               <span className="w-3.5 h-3.5 rounded-full bg-red-500/80"></span>
               <span className="w-3.5 h-3.5 rounded-full bg-yellow-500/80"></span>
               <span className="w-3.5 h-3.5 rounded-full bg-green-500/80"></span>
-              <span className="text-xs font-mono text-slate-400 ml-3">
+              <span className="text-xs font-mono text-slate-400 ml-2 sm:ml-3 truncate max-w-[200px] sm:max-w-none">
                 mridul@universe: ~/portfolio/cli
               </span>
             </div>
@@ -258,7 +257,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
               <button
                 onClick={() => setHistory([])}
                 title="Clear screen"
-                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+                className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
               >
                 <Trash2 className="w-4 h-4" />
               </button>
@@ -266,21 +265,21 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
           </div>
 
           {/* Terminal Output Area */}
-          <div className="p-8 max-h-[420px] overflow-y-auto space-y-4 text-xs sm:text-sm">
+          <div className="p-4 sm:p-8 max-h-[360px] sm:max-h-[420px] overflow-y-auto space-y-3 sm:space-y-4 text-xs sm:text-sm">
             {history.map((item, idx) => (
               <div key={idx} className="space-y-1.5">
-                <div className="flex items-center gap-2.5 text-brand-sky font-bold">
+                <div className="flex items-center gap-2 text-brand-sky font-bold">
                   <span className="text-brand-orange">mridul@universe:~$</span>
                   <span>{item.command}</span>
                 </div>
                 {Array.isArray(item.output) ? (
-                  <div className="space-y-1 text-slate-300 pl-4">
+                  <div className="space-y-1 text-slate-300 pl-2 sm:pl-4">
                     {item.output.map((line, lIdx) => (
                       <div key={lIdx}>{line}</div>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-slate-300 pl-4">{item.output}</div>
+                  <div className="text-slate-300 pl-2 sm:pl-4">{item.output}</div>
                 )}
               </div>
             ))}
@@ -288,21 +287,20 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
           </div>
 
           {/* Terminal Input Line */}
-          <form onSubmit={handleCommand} className="flex items-center px-8 py-5 border-t border-white/10 bg-surface-950">
-            <span className="text-brand-orange font-bold text-xs sm:text-sm mr-3 shrink-0">
+          <form onSubmit={handleCommand} className="flex items-center px-4 sm:px-8 py-3.5 sm:py-5 border-t border-white/10 bg-surface-950">
+            <span className="text-brand-orange font-bold text-xs sm:text-sm mr-2 sm:mr-3 shrink-0">
               mridul@universe:~$
             </span>
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder='Type "help", "siirham", "skills", "soundtrack" or "contact"...'
-              className="w-full bg-transparent text-xs sm:text-sm text-white focus:outline-none font-mono placeholder:text-slate-600"
-              autoFocus={false}
+              placeholder='Type "help", "siirham", "skills", "soundtrack"...'
+              autoComplete="off"
+              autoCapitalize="off"
+              spellCheck="false"
+              className="w-full bg-transparent text-sm text-white focus:outline-none font-mono placeholder:text-slate-600"
             />
-            <button type="submit" className="text-slate-500 hover:text-white ml-3">
-              <CornerDownLeft className="w-5 h-5" />
-            </button>
           </form>
 
         </div>

@@ -123,9 +123,19 @@ class SoundEngine {
 
   public toggleMute(): boolean {
     this.isMuted = !this.isMuted;
-    if (this.isMuted) {
-      this.stopMusic();
-    } else {
+    if (this.audioPlayer) {
+      this.audioPlayer.muted = this.isMuted;
+      this.audioPlayer.volume = this.isMuted ? 0 : this.currentVolume;
+    }
+    if (this.musicGainNode && this.ctx) {
+      try {
+        this.musicGainNode.gain.setValueAtTime(
+          this.isMuted ? 0.0001 : this.currentVolume * 0.45,
+          this.ctx.currentTime
+        );
+      } catch {}
+    }
+    if (!this.isMuted) {
       this.playChime();
     }
     this.notify();
@@ -134,6 +144,31 @@ class SoundEngine {
 
   public getMuted(): boolean {
     return this.isMuted;
+  }
+
+  public togglePlayPause() {
+    if (this.isCurrentlyPlayingMusic) {
+      this.stopMusic();
+    } else {
+      if (this.audioPlayer && this.audioPlayer.src) {
+        const playPromise = this.audioPlayer.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              this.isCurrentlyPlayingMusic = true;
+              this.notify();
+            })
+            .catch(() => {
+              this.startMusic(this.currentTrack);
+            });
+        } else {
+          this.isCurrentlyPlayingMusic = true;
+          this.notify();
+        }
+      } else {
+        this.startMusic(this.currentTrack);
+      }
+    }
   }
 
   public playClick(freq = 600, duration = 0.04) {
@@ -273,12 +308,19 @@ class SoundEngine {
 
   public setMusicVolume(volumePercent: number) {
     this.currentVolume = Math.max(0, Math.min(1, volumePercent / 100));
+    if (this.currentVolume > 0 && this.isMuted) {
+      this.isMuted = false;
+    }
     if (this.audioPlayer) {
-      this.audioPlayer.volume = this.currentVolume;
+      this.audioPlayer.muted = this.isMuted;
+      this.audioPlayer.volume = this.isMuted ? 0 : this.currentVolume;
     }
     if (this.musicGainNode && this.ctx) {
       try {
-        this.musicGainNode.gain.setValueAtTime(this.currentVolume * 0.45, this.ctx.currentTime);
+        this.musicGainNode.gain.setValueAtTime(
+          this.isMuted ? 0.0001 : this.currentVolume * 0.45,
+          this.ctx.currentTime
+        );
       } catch {
         // pass
       }
@@ -340,8 +382,6 @@ class SoundEngine {
     artist?: string,
     coverUrl?: string
   ) {
-    if (this.isMuted) return;
-
     if (typeof titleOrTrack === 'object') {
       this.currentTrack = { ...titleOrTrack };
     } else {
@@ -367,7 +407,8 @@ class SoundEngine {
 
     try {
       const player = this.getAudioPlayer();
-      player.volume = this.currentVolume;
+      player.muted = this.isMuted;
+      player.volume = this.isMuted ? 0 : this.currentVolume;
       player.src = primaryAudioUrl;
 
       const playPromise = player.play();

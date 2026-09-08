@@ -106,7 +106,7 @@ export const BeyondCodeSection: React.FC<BeyondCodeSectionProps> = ({ onNavigate
       <div className="absolute top-1/4 left-10 w-[600px] h-[600px] bg-brand-pink/15 rounded-full blur-[170px] pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-brand-sky/15 rounded-full blur-[170px] pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">

@@ -72,7 +72,7 @@ export const ContactSection: React.FC = () => {
       <div className="absolute bottom-1/4 left-1/3 w-[700px] h-[700px] bg-brand-pink/20 rounded-full blur-[180px] pointer-events-none -z-10 animate-glow-pulse" />
       <div className="absolute bottom-10 right-1/3 w-[650px] h-[650px] bg-brand-sky/20 rounded-full blur-[170px] pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
