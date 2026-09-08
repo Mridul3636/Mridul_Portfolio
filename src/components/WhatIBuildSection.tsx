@@ -128,7 +128,7 @@ export const WhatIBuildSection: React.FC<WhatIBuildSectionProps> = ({ onNavigate
   return (
     <section 
       id="capabilities" 
-      className="relative py-28 sm:py-36 md:py-40 bg-[#02040a] border-b border-white/[0.06] overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
       {/* Background Chromatic Gradient: Yellow transitioning into Sky Blue */}
       <div className="absolute top-1/3 left-0 w-[550px] h-[550px] bg-brand-yellow/10 rounded-full blur-[160px] pointer-events-none -z-10" />

@@ -20,11 +20,11 @@ export const Footer: React.FC = () => {
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-white tracking-widest">
-                MRIDUL
+              <span className="font-display font-bold text-white tracking-wider">
+                Md. Minhazur Rahaman
               </span>
               <span className="text-slate-500">•</span>
-              <span className="text-slate-300">Full Stack Developer</span>
+              <span className="text-slate-300">Software Engineer</span>
             </div>
             <p className="text-[11px] text-slate-500">
               Dhaka, Bangladesh • Computer Science & Engineering

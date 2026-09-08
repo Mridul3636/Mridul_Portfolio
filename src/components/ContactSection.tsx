@@ -64,7 +64,7 @@ export const ContactSection: React.FC = () => {
   return (
     <section 
       id="contact" 
-      className="relative py-32 sm:py-44 bg-[#000000] overflow-hidden"
+      className="relative py-32 sm:py-44 bg-transparent overflow-hidden"
     >
       {/* Spectacular Multi-Layered Blurred Gradient Lights (Orange, Yellow, Pink, Sky Blue) */}
       <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-brand-orange/20 rounded-full blur-[170px] pointer-events-none -z-10 animate-pulse-slow" />

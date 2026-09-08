@@ -92,15 +92,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-base tracking-wider text-white group-hover:text-brand-orange transition-colors">
-                MRIDUL
+              <span className="font-display font-bold text-sm sm:text-base tracking-wide text-white group-hover:text-brand-orange transition-colors">
+                Md. Minhazur Rahaman
               </span>
               <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-brand-orange/10 text-brand-orange border border-brand-orange/20">
                 v2.4
               </span>
             </div>
             <p className="text-[11px] text-slate-400 font-mono tracking-tight hidden sm:block">
-              Full Stack Architect
+              Software Engineer & Intelligent Systems Specialist
             </p>
           </div>
         </button>

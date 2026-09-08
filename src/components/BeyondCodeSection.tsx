@@ -100,7 +100,7 @@ export const BeyondCodeSection: React.FC<BeyondCodeSectionProps> = ({ onNavigate
   return (
     <section 
       id="beyond-code" 
-      className="relative py-28 sm:py-36 md:py-40 bg-[#02040a] border-b border-white/[0.06] overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
       {/* Background Chromatic Gradient: Pink + Sky Blue + subtle Orange */}
       <div className="absolute top-1/4 left-10 w-[600px] h-[600px] bg-brand-pink/15 rounded-full blur-[170px] pointer-events-none -z-10" />

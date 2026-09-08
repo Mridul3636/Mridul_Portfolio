@@ -97,9 +97,10 @@ class SoundEngine {
     // Set custom CSS variables for full page ambient lighting
     const root = document.documentElement;
     root.style.setProperty('--theme-glow-accent', hex);
-    root.style.setProperty('--theme-glow-1', `${hex}33`); // 20% opacity primary aura
-    root.style.setProperty('--theme-glow-2', `${hex}22`); // 13% opacity secondary aura
-    root.style.setProperty('--theme-glow-3', `${hex}12`); // 7% subtle mesh aura
+    root.style.setProperty('--theme-primary', hex);
+    root.style.setProperty('--theme-glow-1', `${hex}55`); // 33% opacity primary aura
+    root.style.setProperty('--theme-glow-2', `${hex}33`); // 20% opacity secondary aura
+    root.style.setProperty('--theme-glow-3', `${hex}1a`); // 10% subtle mesh aura
   }
 
   // =========================================================================

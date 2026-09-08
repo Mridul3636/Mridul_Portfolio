@@ -19,10 +19,88 @@ import { QuickDock } from './components/QuickDock';
 import { FloatingMusicPlayer } from './components/FloatingMusicPlayer';
 import { soundEngine } from './utils/soundEngine';
 
+interface ThemePalette {
+  primary: string;
+  secondary: string;
+  tertiary: string;
+  darkBg: string;
+  name: string;
+}
+
+const getThemePalette = (colorHex: string): ThemePalette => {
+  const hex = (colorHex || '#818cf8').toLowerCase();
+  
+  // Michael Jackson - Amber Gold / Sunset Neon
+  if (hex === '#f59e0b' || hex.includes('f59e0b') || hex.includes('d97706')) {
+    return {
+      primary: '#f59e0b',
+      secondary: '#ea580c',
+      tertiary: '#fbbf24',
+      darkBg: '#0f0802',
+      name: 'Sunset Gold'
+    };
+  }
+  
+  // Phonk / Energy Mode - Crimson Red / Lava Fire
+  if (hex === '#ef4444' || hex.includes('ef4444') || hex.includes('dc2626')) {
+    return {
+      primary: '#ef4444',
+      secondary: '#b91c1c',
+      tertiary: '#f43f5e',
+      darkBg: '#120306',
+      name: 'Crimson Surge'
+    };
+  }
+  
+  // Soft Hours (Arijit / Anuv Jain) - Romantic Rose / Cherry Blossom
+  if (hex === '#ec4899' || hex.includes('ec4899') || hex.includes('db2777')) {
+    return {
+      primary: '#ec4899',
+      secondary: '#a21caf',
+      tertiary: '#f472b6',
+      darkBg: '#12030d',
+      name: 'Rose Romance'
+    };
+  }
+  
+  // Pop Rotation (Taylor Swift) - Electric Cyan / Sky Blue
+  if (hex === '#38bdf8' || hex.includes('38bdf8') || hex.includes('0ea5e9') || hex.includes('06b6d4')) {
+    return {
+      primary: '#38bdf8',
+      secondary: '#6366f1',
+      tertiary: '#06b6d4',
+      darkBg: '#030a15',
+      name: 'Electric Cyan'
+    };
+  }
+  
+  // Indie Side (Arctic Monkeys) - Neon Emerald / Jade Mint
+  if (hex === '#10b981' || hex.includes('10b981') || hex.includes('059669')) {
+    return {
+      primary: '#10b981',
+      secondary: '#0d9488',
+      tertiary: '#34d399',
+      darkBg: '#02100b',
+      name: 'Emerald Jade'
+    };
+  }
+  
+  // Late Night (Cigarettes After Sex / Default) - Cosmic Indigo / Violet Night
+  return {
+    primary: '#818cf8',
+    secondary: '#6366f1',
+    tertiary: '#a855f7',
+    darkBg: '#050716',
+    name: 'Cosmic Indigo'
+  };
+};
+
 export function App() {
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [currentThemeColor, setCurrentThemeColor] = useState<string>('#818cf8');
   const [isPlayingMusic, setIsPlayingMusic] = useState<boolean>(false);
+
+  const palette = getThemePalette(currentThemeColor);
 
   // Subscribe to SoundEngine for dynamic music theme changes across the website
   useEffect(() => {
@@ -34,6 +112,17 @@ export function App() {
     });
     return unsubscribe;
   }, []);
+
+  // Update root CSS variables when palette changes
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const root = document.documentElement;
+      root.style.setProperty('--theme-primary', palette.primary);
+      root.style.setProperty('--theme-secondary', palette.secondary);
+      root.style.setProperty('--theme-tertiary', palette.tertiary);
+      root.style.setProperty('--theme-dark-bg', palette.darkBg);
+    }
+  }, [palette]);
 
   // Smooth scroll handler
   const handleNavigate = (sectionId: string) => {
@@ -89,26 +178,49 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 selection:bg-brand-orange/30 selection:text-brand-orange relative overflow-x-hidden">
+    <div 
+      className="min-h-screen text-slate-100 selection:bg-brand-orange/30 selection:text-brand-orange relative overflow-x-hidden transition-colors duration-1000 ease-out"
+      style={{ backgroundColor: palette.darkBg }}
+    >
       {/* Dynamic Chromatic Atmosphere (Morphs with every Song Change) */}
       <div 
         className="fixed inset-0 pointer-events-none -z-10 overflow-hidden transition-all duration-1000 ease-out"
         style={{
-          background: `radial-gradient(ellipse 80% 50% at 50% -10%, ${currentThemeColor}28, transparent 70%), radial-gradient(circle 600px at 90% 30%, ${currentThemeColor}18, transparent 70%), radial-gradient(circle 700px at 10% 70%, ${currentThemeColor}14, transparent 70%)`
+          background: `
+            radial-gradient(ellipse 110% 70% at 50% -15%, ${palette.primary}4D 0%, transparent 65%),
+            radial-gradient(circle 950px at 95% 25%, ${palette.secondary}38 0%, transparent 65%),
+            radial-gradient(circle 950px at 5% 75%, ${palette.tertiary}30 0%, transparent 65%),
+            linear-gradient(145deg, ${palette.primary}18 0%, transparent 45%, ${palette.secondary}22 100%)
+          `
         }}
       >
-        {/* Pulsing ambient orbs */}
+        {/* Pulsing ambient orbs with rich chromatic glow */}
         <div 
-          className={`absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[180px] transition-all duration-1000 ${
-            isPlayingMusic ? 'opacity-30 scale-105' : 'opacity-15 scale-100'
+          className={`absolute -top-24 left-1/2 -translate-x-1/2 w-[900px] h-[550px] rounded-full blur-[160px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-60 scale-110' : 'opacity-35 scale-100'
           }`}
-          style={{ backgroundColor: currentThemeColor }}
+          style={{ backgroundColor: palette.primary }}
         />
         <div 
-          className={`absolute top-2/3 right-[-10%] w-[600px] h-[600px] rounded-full blur-[200px] transition-all duration-1000 ${
-            isPlayingMusic ? 'opacity-25' : 'opacity-10'
+          className={`absolute top-1/3 -right-24 w-[750px] h-[750px] rounded-full blur-[190px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-45 scale-105' : 'opacity-25 scale-95'
           }`}
-          style={{ backgroundColor: currentThemeColor }}
+          style={{ backgroundColor: palette.secondary }}
+        />
+        <div 
+          className={`absolute bottom-1/4 -left-24 w-[800px] h-[800px] rounded-full blur-[200px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-40 scale-105' : 'opacity-20 scale-95'
+          }`}
+          style={{ backgroundColor: palette.tertiary }}
+        />
+
+        {/* Subtle dynamic grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+          style={{
+            backgroundImage: `radial-gradient(circle at 1px 1px, ${palette.primary} 1px, transparent 0)`,
+            backgroundSize: '40px 40px'
+          }}
         />
       </div>
 

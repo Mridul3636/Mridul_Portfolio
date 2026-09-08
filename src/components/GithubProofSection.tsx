@@ -50,7 +50,7 @@ export const GithubProofSection: React.FC = () => {
   return (
     <section 
       id="github-proof" 
-      className="relative py-28 sm:py-36 md:py-40 bg-[#02040a] border-b border-white/[0.06] overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
       {/* Background Chromatic Gradient: Emerald & Sky Blue glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[650px] h-[650px] bg-brand-emerald/10 rounded-full blur-[170px] pointer-events-none -z-10" />

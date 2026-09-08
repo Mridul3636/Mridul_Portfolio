@@ -195,7 +195,7 @@ export const SoundtrackSection: React.FC = () => {
   return (
     <section 
       id="soundtrack" 
-      className="relative py-28 sm:py-36 md:py-40 bg-[#02040a] border-b border-white/[0.06] overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
       {/* Background Chromatic Gradient matching theme */}
       <div 

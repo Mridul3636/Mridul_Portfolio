@@ -213,7 +213,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
   return (
     <section 
       id="terminal" 
-      className="relative py-28 sm:py-36 md:py-40 bg-[#02040a] border-b border-white/[0.06] overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         

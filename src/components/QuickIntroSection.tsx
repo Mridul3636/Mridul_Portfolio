@@ -70,7 +70,7 @@ export const QuickIntroSection: React.FC<QuickIntroSectionProps> = ({ onNavigate
   return (
     <section 
       id="intro" 
-      className="relative py-28 sm:py-36 md:py-40 bg-[#02040a] border-b border-white/[0.06] overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-40 bg-transparent border-b border-white/[0.06] overflow-hidden"
     >
       {/* Background Chromatic Gradient: Orange transitioning into Yellow */}
       <div className="absolute top-0 right-0 w-[550px] h-[550px] bg-brand-orange/10 rounded-full blur-[160px] pointer-events-none -z-10" />
