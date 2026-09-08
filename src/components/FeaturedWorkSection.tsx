@@ -4,7 +4,9 @@ import {
   ExternalLink, 
   Code2, 
   ChevronLeft, 
-  ChevronRight 
+  ChevronRight,
+  ShieldAlert,
+  FolderGit2
 } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { signatureProjects } from '../data/portfolioData';
@@ -13,24 +15,37 @@ import { soundEngine } from '../utils/soundEngine';
 export const FeaturedWorkSection: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('all');
 
-  const categories = ['all', 'Client Systems', 'Agentic AI & Swarms', 'Admin Dashboards & ERP', 'Testing & SQA Automation'];
+  const categories = [
+    { id: 'all', label: 'All Projects' },
+    { id: 'e-commerce', label: 'E-Commerce & Canvas' },
+    { id: 'admin', label: 'ERP & Dashboards' },
+    { id: 'web', label: 'Web Applications' },
+    { id: 'ai', label: 'Machine Learning & AI' },
+    { id: 'swarm', label: 'Agentic AI & Swarms' }
+  ];
 
-  const filteredProjects = activeCategory === 'all'
-    ? signatureProjects
-    : signatureProjects.filter(p => p.category.toLowerCase().includes(activeCategory.toLowerCase()));
+  const filteredProjects = signatureProjects.filter(p => {
+    if (activeCategory === 'all') return true;
+    if (activeCategory === 'e-commerce') return p.category.toLowerCase().includes('commerce') || p.category.toLowerCase().includes('canvas');
+    if (activeCategory === 'admin') return p.category.toLowerCase().includes('admin') || p.category.toLowerCase().includes('erp');
+    if (activeCategory === 'web') return p.category.toLowerCase().includes('web');
+    if (activeCategory === 'ai') return p.category.toLowerCase().includes('machine learning') || p.category.toLowerCase().includes('ai');
+    if (activeCategory === 'swarm') return p.category.toLowerCase().includes('swarm') || p.category.toLowerCase().includes('agentic');
+    return true;
+  });
 
   const handleNext = () => {
     soundEngine.playClick();
-    const currentIdx = categories.indexOf(activeCategory);
+    const currentIdx = categories.findIndex(c => c.id === activeCategory);
     const nextIdx = (currentIdx + 1) % categories.length;
-    setActiveCategory(categories[nextIdx]);
+    setActiveCategory(categories[nextIdx].id);
   };
 
   const handlePrev = () => {
     soundEngine.playClick();
-    const currentIdx = categories.indexOf(activeCategory);
+    const currentIdx = categories.findIndex(c => c.id === activeCategory);
     const prevIdx = (currentIdx - 1 + categories.length) % categories.length;
-    setActiveCategory(categories[prevIdx]);
+    setActiveCategory(categories[prevIdx].id);
   };
 
   return (
@@ -55,24 +70,24 @@ export const FeaturedWorkSection: React.FC = () => {
               Featured Projects
             </h2>
             <p className="text-slate-400 font-sans text-sm sm:text-base mt-2 max-w-xl">
-              Real builds where competitive-programming mindset meets production software engineering.
+              Production systems, intelligent architectures, and full-stack software built for real businesses and clients.
             </p>
           </div>
 
-          {/* Category Filter Pills & Carousel Controls */}
+          {/* Category Filter Carousel Controls */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2">
               <button
                 onClick={handlePrev}
                 className="p-3 rounded-2xl bg-surface-900 border border-white/10 text-slate-300 hover:text-white hover:border-white/30 transition-all shadow-md"
-                title="Previous Project"
+                title="Previous Category"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleNext}
                 className="p-3 rounded-2xl bg-surface-900 border border-white/10 text-slate-300 hover:text-white hover:border-white/30 transition-all shadow-md"
-                title="Next Project"
+                title="Next Category"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -84,23 +99,23 @@ export const FeaturedWorkSection: React.FC = () => {
         <div className="flex items-center gap-2.5 overflow-x-auto pb-4 mb-10 scrollbar-none">
           {categories.map((cat) => (
             <button
-              key={cat}
+              key={cat.id}
               onClick={() => {
                 soundEngine.playClick();
-                setActiveCategory(cat);
+                setActiveCategory(cat.id);
               }}
               className={`shrink-0 px-4 py-2 rounded-2xl text-xs font-mono transition-all border ${
-                activeCategory === cat
+                activeCategory === cat.id
                   ? 'bg-brand-sky/15 border-brand-sky text-brand-sky font-bold shadow-md'
                   : 'bg-surface-900/60 border-white/[0.08] text-slate-400 hover:text-white hover:bg-surface-850'
               }`}
             >
-              {cat === 'all' ? 'All Projects' : cat}
+              {cat.label}
             </button>
           ))}
         </div>
 
-        {/* Clean Project Cards Grid (Exact Style of Screenshot 3) */}
+        {/* Clean Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {filteredProjects.map((project) => (
             <div
@@ -108,50 +123,70 @@ export const FeaturedWorkSection: React.FC = () => {
               className="glass-card rounded-3xl border border-white/10 hover:border-brand-sky/40 overflow-hidden shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group bg-[#060b17]/90 backdrop-blur-xl"
             >
               <div>
-                {/* Visual Top Header Banner (Screenshot 3 style) */}
-                <div className="p-6 sm:p-7 bg-gradient-to-br from-[#0c162d] to-[#060c1c] border-b border-white/[0.08] relative overflow-hidden flex flex-col justify-between min-h-[140px]">
-                  {/* Subtle Background Accent Glow */}
-                  <div 
-                    className="absolute -right-10 -bottom-10 w-32 h-32 rounded-full blur-2xl pointer-events-none opacity-30"
-                    style={{ backgroundColor: project.accent }}
-                  />
-
-                  <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-surface-900/90 border border-white/10 flex items-center justify-center text-brand-sky shadow-inner">
-                      <Code2 className="w-6 h-6" style={{ color: project.accent }} />
+                {/* Visual Project Image Header */}
+                <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-surface-950 border-b border-white/[0.08]">
+                  {project.imageUrl ? (
+                    <img 
+                      src={project.imageUrl} 
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-[#0c162d] to-[#060c1c] flex items-center justify-center">
+                      <Code2 className="w-12 h-12 text-slate-600" />
                     </div>
+                  )}
 
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#060b17] via-[#060b17]/40 to-transparent" />
+
+                  {/* Top Badges */}
+                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
                     <span 
-                      className="px-3 py-1 rounded-full text-[10px] font-mono uppercase font-bold tracking-wider border shadow-sm"
+                      className="px-3 py-1 rounded-full text-[10px] font-mono uppercase font-bold tracking-wider border shadow-md backdrop-blur-md"
                       style={{ 
-                        backgroundColor: `${project.accent}15`, 
+                        backgroundColor: `${project.accent}20`, 
                         color: project.accent, 
-                        borderColor: `${project.accent}40` 
+                        borderColor: `${project.accent}50` 
                       }}
                     >
-                      {project.isCrownJewel ? '⭐ Client Project' : project.featuredYear}
+                      {project.isCrownJewel ? 'Flagship Project' : project.featuredYear}
                     </span>
+
+                    <div className="w-9 h-9 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-center text-white shadow-md">
+                      <Code2 className="w-4 h-4" style={{ color: project.accent }} />
+                    </div>
                   </div>
 
-                  <div className="mt-4">
+                  {/* Title Bar inside Bottom of Image */}
+                  <div className="absolute bottom-3 left-5 right-5 pointer-events-none">
                     <h3 className="font-display font-black text-xl sm:text-2xl text-white tracking-tight group-hover:text-brand-sky transition-colors truncate">
                       {project.title}
                     </h3>
-                    <p className="text-xs font-mono text-slate-400 truncate mt-0.5">
+                    <p className="text-xs font-mono text-slate-300 truncate">
                       {project.subtitle}
                     </p>
                   </div>
                 </div>
 
                 {/* Card Body Content */}
-                <div className="p-6 sm:p-7 space-y-6">
+                <div className="p-6 sm:p-7 space-y-5">
                   
+                  {/* Confidential Project Notice for EMP */}
+                  {project.isConfidential && (
+                    <div className="px-3.5 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] font-mono flex items-center gap-2">
+                      <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0" />
+                      <span className="font-semibold">{project.confidentialNotice || 'Confidential project for that company only'}</span>
+                    </div>
+                  )}
+
                   {/* Concise Description */}
                   <p className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed line-clamp-3">
                     {project.description}
                   </p>
 
-                  {/* Languages Used Breakdown Bar (Screenshot 3 match) */}
+                  {/* Languages Used Breakdown Bar */}
                   {project.languagesBreakdown && (
                     <div className="space-y-2 pt-1">
                       <div className="flex items-center justify-between text-[11px] font-mono">
@@ -200,25 +235,32 @@ export const FeaturedWorkSection: React.FC = () => {
                 </div>
               </div>
 
-              {/* Bottom Action Footer (Screenshot 3 match) */}
+              {/* Bottom Action Footer */}
               <div className="p-6 sm:p-7 pt-4 border-t border-white/[0.08] flex items-center justify-between gap-3 bg-surface-950/40">
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-2 rounded-xl bg-surface-900 border border-white/10 hover:border-white/30 text-xs font-mono text-slate-300 hover:text-white flex items-center gap-2 transition-all shadow-sm"
-                >
-                  <GithubIcon className="w-3.5 h-3.5" />
-                  <span>GitHub</span>
-                </a>
+                {project.githubUrl ? (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="px-4 py-2 rounded-xl bg-surface-900 border border-white/10 hover:border-white/30 text-xs font-mono text-slate-300 hover:text-white flex items-center gap-2 transition-all shadow-sm"
+                  >
+                    <GithubIcon className="w-3.5 h-3.5" />
+                    <span>GitHub</span>
+                  </a>
+                ) : (
+                  <div className="px-4 py-2 rounded-xl bg-surface-900/50 border border-white/5 text-xs font-mono text-slate-500 flex items-center gap-2">
+                    <FolderGit2 className="w-3.5 h-3.5" />
+                    <span>Internal</span>
+                  </div>
+                )}
 
                 <a
                   href={project.liveUrl || project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-4 py-2 rounded-xl bg-brand-sky/10 border border-brand-sky/30 hover:bg-brand-sky hover:text-black text-xs font-mono text-brand-sky font-semibold flex items-center gap-2 transition-all shadow-sm"
+                  className="px-4 py-2 rounded-xl bg-brand-sky/10 border border-brand-sky/30 hover:bg-brand-sky hover:text-black text-xs font-mono text-brand-sky font-semibold flex items-center gap-2 transition-all shadow-sm ml-auto"
                 >
-                  <span>Live Preview</span>
+                  <span>{project.isConfidential ? 'Live Portal' : 'Live Preview'}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>

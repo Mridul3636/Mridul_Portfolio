@@ -36,6 +36,9 @@ export type ProjectItem = {
   glowColor: string;
   metrics: { label: string; val: string }[];
   languagesBreakdown?: { name: string; percent: number; color: string }[];
+  imageUrl?: string;
+  isConfidential?: boolean;
+  confidentialNotice?: string;
   problem?: string;
   solution?: string;
   architecture?: string[];

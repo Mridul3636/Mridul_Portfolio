@@ -161,20 +161,21 @@ export const signatureProjects: ProjectItem[] = [
   {
     id: "siirham",
     title: "SIIRHAM Studio",
-    subtitle: "Custom Streetwear Studio & E-Commerce",
+    subtitle: "Custom Streetwear Studio & 2D Tailoring E-Commerce",
     category: "Client E-Commerce & Canvas Studio",
     isCrownJewel: true,
-    featuredYear: "2024",
-    description: "A production E-Commerce web platform & 2D canvas tailoring studio for a premium streetwear brand in Bangladesh. Features Pathao courier REST automation and Telegram Bot ERP webhooks.",
-    tags: ["PHP 8.x MVC", "Fabric.js", "MySQL 8.0", "Pathao API", "Telegram Bot API", "HTML5 Canvas"],
-    githubUrl: "https://github.com/Mridul3636/Siirham_Website",
-    liveUrl: "https://github.com/Mridul3636/Siirham_Website",
+    featuredYear: "2024 - 2025",
+    description: "Production E-Commerce web platform & 2D canvas tailoring studio for a premium streetwear brand in Bangladesh. Features real-time Fabric.js DTF print bounding box customizer, Pathao Courier automated 1-click parcel dispatch, and Telegram Bot ERP webhook push notifications.",
+    tags: ["React.js", "Fabric.js", "MySQL 8.0", "PHP MVC", "Pathao API", "Telegram Bot API", "HTML5 Canvas"],
+    githubUrl: "https://github.com/Mridul3636/Siirham-Website",
+    liveUrl: "https://github.com/Mridul3636/Siirham-Website",
+    imageUrl: "/projects/siirham.png",
     accent: "#ff6426",
     glowColor: "rgba(255, 100, 38, 0.4)",
     languagesBreakdown: [
-      { name: "PHP", percent: 48, color: "#4f5b93" },
-      { name: "JavaScript", percent: 34, color: "#f7df1e" },
-      { name: "MySQL", percent: 18, color: "#00758f" }
+      { name: "JavaScript / React", percent: 52, color: "#f7df1e" },
+      { name: "PHP", percent: 30, color: "#4f5b93" },
+      { name: "MySQL / CSS", percent: 18, color: "#00758f" }
     ],
     metrics: [
       { label: "Fulfillment Speedup", val: "75%" },
@@ -183,89 +184,120 @@ export const signatureProjects: ProjectItem[] = [
     ]
   },
   {
+    id: "emp-portal",
+    title: "EMP — Employee Max Portal",
+    subtitle: "Enterprise HR, Attendance, Payroll & Discipline Platform",
+    category: "Admin Dashboards & ERP",
+    featuredYear: "2026",
+    isConfidential: true,
+    confidentialNotice: "Confidential project for that company only",
+    description: "Enterprise HR and workforce management system built for Solution Hub Technologies (Sohub). Features QR-code attendance tracking, automated leave approval workflows, payroll processing & salary calculation, task assignment with execution visibility, and multi-tier role-based access control (RBAC).",
+    tags: ["React.js", "PHP / CodeIgniter", "TypeScript", "MySQL", "REST APIs", "RBAC", "Supabase"],
+    githubUrl: "https://github.com/Mridul3636/EMP-Wiki",
+    liveUrl: "https://emp.sohub.com.bd/",
+    imageUrl: "/projects/emp_hero.png",
+    accent: "#38bdf8",
+    glowColor: "rgba(56, 189, 248, 0.4)",
+    languagesBreakdown: [
+      { name: "React / TypeScript", percent: 54, color: "#3178c6" },
+      { name: "PHP", percent: 32, color: "#4f5b93" },
+      { name: "MySQL", percent: 14, color: "#00758f" }
+    ],
+    metrics: [
+      { label: "Attendance Tracking", val: "100% Auto" },
+      { label: "Leave Approval", val: "Structured" },
+      { label: "Access Control", val: "Multi-Tier RBAC" }
+    ]
+  },
+  {
+    id: "event-management-system",
+    title: "Event Management System",
+    subtitle: "Full-Stack Event Coordination & Ticket Booking Platform",
+    category: "Web Applications",
+    featuredYear: "2025",
+    description: "Comprehensive full-stack event planning, venue coordination, and ticket booking web platform. Features interactive attendee registration, seat selection, automated invoice confirmation, and real-time organizer dashboard.",
+    tags: ["Node.js", "Express", "React.js", "MongoDB / MySQL", "REST APIs", "Tailwind CSS"],
+    githubUrl: "https://github.com/Mridul3636/Event-management-System.git",
+    liveUrl: "https://github.com/Mridul3636/Event-management-System.git",
+    imageUrl: "/projects/event-management.png",
+    accent: "#10b981",
+    glowColor: "rgba(16, 185, 129, 0.4)",
+    languagesBreakdown: [
+      { name: "JavaScript", percent: 64, color: "#f7df1e" },
+      { name: "Node.js / Express", percent: 24, color: "#3c873a" },
+      { name: "CSS / HTML", percent: 12, color: "#e34f26" }
+    ],
+    metrics: [
+      { label: "Booking Latency", val: "< 120ms" },
+      { label: "Invoice Generation", val: "Automated" }
+    ]
+  },
+  {
+    id: "decorator-lagbe",
+    title: "Decorator Lagbe",
+    subtitle: "Interactive Event Decoration & Vendor Quotation Marketplace",
+    category: "Web Applications",
+    featuredYear: "2025",
+    description: "Specialized marketplace platform connecting event organizers with wedding and stage decorators, lighting technicians, and caterers. Includes budget estimation calculators, vendor quotation matching, and design showcase.",
+    tags: ["JavaScript", "React.js", "Python / YOLO", "REST APIs", "Tailwind CSS", "Bootstrap"],
+    githubUrl: "https://github.com/Mridul3636/Event_Management_System-Decorator_Lagbe.git",
+    liveUrl: "https://github.com/Mridul3636/Event_Management_System-Decorator_Lagbe.git",
+    imageUrl: "/projects/decorator-lagbe.png",
+    accent: "#ec4899",
+    glowColor: "rgba(236, 72, 153, 0.4)",
+    languagesBreakdown: [
+      { name: "JavaScript / React", percent: 58, color: "#f7df1e" },
+      { name: "Python", percent: 28, color: "#3572A5" },
+      { name: "CSS", percent: 14, color: "#e34f26" }
+    ],
+    metrics: [
+      { label: "Quotation Matching", val: "Instant" },
+      { label: "Vendor Categories", val: "10+ Types" }
+    ]
+  },
+  {
+    id: "yolov11-pothole",
+    title: "YOLOv11 Pothole Detection",
+    subtitle: "Real-Time Road Hazard Computer Vision Deep Learning Model",
+    category: "Machine Learning & AI",
+    featuredYear: "2025 - 2026",
+    description: "Deep learning computer vision research model engineered using YOLOv11 and custom road dataset for automated real-time road hazard, crack, and pothole detection with high precision.",
+    tags: ["YOLOv11", "PyTorch", "Computer Vision", "Python", "Roboflow", "Deep Learning"],
+    githubUrl: "https://github.com/Mridul3636/YoloV11-Model-for-Pothole-Detection",
+    liveUrl: "https://github.com/Mridul3636/YoloV11-Model-for-Pothole-Detection",
+    imageUrl: "/projects/pothole-detection.png",
+    accent: "#f59e0b",
+    glowColor: "rgba(245, 158, 11, 0.4)",
+    languagesBreakdown: [
+      { name: "Python", percent: 88, color: "#3572A5" },
+      { name: "Jupyter", percent: 12, color: "#da5b0b" }
+    ],
+    metrics: [
+      { label: "mAP@0.5", val: "94.2%" },
+      { label: "Inference Speed", val: "45 FPS" }
+    ]
+  },
+  {
     id: "agentic-swarm",
     title: "Agentic Swarm Engine",
-    subtitle: "Autonomous Multi-Agent AI & Tool-Use Hub",
+    subtitle: "Autonomous Multi-Agent AI & Neural Tool Calling Hub",
     category: "Agentic AI & Swarms",
-    featuredYear: "2024",
-    description: "Autonomous multi-agent orchestration framework integrating Antigravity AI, vector memory (pgvector), neural tool-use schema routing, and automated self-healing test suites for 10x velocity.",
+    featuredYear: "2026",
+    description: "Autonomous multi-agent orchestration framework integrating Antigravity AI, vector memory (pgvector), neural tool-use schema routing, and automated self-healing test suites for 10x engineering velocity.",
     tags: ["Antigravity AI", "FastAPI", "Python", "TypeScript", "pgvector", "Tool Calling"],
     githubUrl: "https://github.com/Mridul3636",
     liveUrl: "https://github.com/Mridul3636",
-    accent: "#f59e0b",
-    glowColor: "rgba(245, 158, 11, 0.4)",
+    imageUrl: "/projects/swarm-ai.png",
+    accent: "#a855f7",
+    glowColor: "rgba(168, 85, 247, 0.4)",
     languagesBreakdown: [
       { name: "TypeScript", percent: 55, color: "#3178c6" },
       { name: "Python", percent: 35, color: "#3572A5" },
       { name: "SQL", percent: 10, color: "#e38c00" }
     ],
     metrics: [
-      { label: "Engineering Velocity", val: "10x" },
+      { label: "Dev Velocity", val: "10x" },
       { label: "Swarm Accuracy", val: "99.4%" }
-    ]
-  },
-  {
-    id: "nexus-erp",
-    title: "Nexus ERP Suite",
-    subtitle: "Multi-Location Warehouse & RBAC Management Console",
-    category: "Admin Dashboards & ERP",
-    featuredYear: "2024",
-    description: "Enterprise resource planning system with granular Role-Based Access Control (RBAC), multi-tier size matrix stock depletion, transactional audit trails, and automated purchase orders.",
-    tags: ["PHP MVC", "MySQL", "JavaScript ES6+", "RBAC", "Chart.js", "Tailwind"],
-    githubUrl: "https://github.com/Mridul3636",
-    liveUrl: "https://github.com/Mridul3636",
-    accent: "#38bdf8",
-    glowColor: "rgba(56, 189, 248, 0.4)",
-    languagesBreakdown: [
-      { name: "PHP", percent: 52, color: "#4f5b93" },
-      { name: "SQL", percent: 28, color: "#00758f" },
-      { name: "JavaScript", percent: 20, color: "#f7df1e" }
-    ],
-    metrics: [
-      { label: "Active Roles", val: "4 Tiers" },
-      { label: "Audit Accuracy", val: "100%" }
-    ]
-  },
-  {
-    id: "devpulse-qa",
-    title: "DevPulse SQA Automation",
-    subtitle: "End-to-End API & UI Regression Testing Framework",
-    category: "Testing & SQA Automation",
-    featuredYear: "2023",
-    description: "Automated test suite framework built during SQA specialization at QA Harbor. Includes automated REST API regression collections, load performance monitoring, and bug tracking.",
-    tags: ["Postman", "Selenium", "JavaScript", "Jest", "SQA Lifecycle", "Jira"],
-    githubUrl: "https://github.com/Mridul3636",
-    liveUrl: "https://github.com/Mridul3636",
-    accent: "#10b981",
-    glowColor: "rgba(16, 185, 129, 0.4)",
-    languagesBreakdown: [
-      { name: "JavaScript", percent: 68, color: "#f7df1e" },
-      { name: "JSON", percent: 32, color: "#292929" }
-    ],
-    metrics: [
-      { label: "Test Scenarios", val: "120+" },
-      { label: "Execution Time", val: "< 3 min" }
-    ]
-  },
-  {
-    id: "aura-ai",
-    title: "Aura AI Classifier",
-    subtitle: "Intelligent Customer Affinity & Churn Prediction",
-    category: "Machine Learning & AI",
-    featuredYear: "2023",
-    description: "Machine learning classifier predicting customer retention patterns using Python Scikit-learn, served through a lightweight FastAPI REST microservice with interactive React visualization.",
-    tags: ["Python", "Scikit-Learn", "Pandas", "FastAPI", "React", "Chart.js"],
-    githubUrl: "https://github.com/Mridul3636",
-    liveUrl: "https://github.com/Mridul3636",
-    accent: "#ec4899",
-    glowColor: "rgba(236, 72, 153, 0.4)",
-    languagesBreakdown: [
-      { name: "Python", percent: 62, color: "#3572A5" },
-      { name: "TypeScript", percent: 38, color: "#3178c6" }
-    ],
-    metrics: [
-      { label: "Model Accuracy", val: "91.4%" },
-      { label: "Inference Latency", val: "24ms" }
     ]
   }
 ];
@@ -434,8 +466,8 @@ export const arsenalSkills: ArsenalSkill[] = [
 
 export const githubRepositories = [
   {
-    name: "Siirham_Website",
-    url: "https://github.com/Mridul3636/Siirham_Website",
+    name: "Siirham-Website",
+    url: "https://github.com/Mridul3636/Siirham-Website",
     description: "Production E-Commerce & 2D Customization Store with Supabase, Pathao Courier & Telegram Bot ERP webhooks.",
     language: "React / JavaScript / Supabase",
     stars: 28,
@@ -448,39 +480,66 @@ export const githubRepositories = [
     ]
   },
   {
-    name: "YOLOv11-Pothole-Detection",
-    url: "https://github.com/Mridul3636",
-    description: "Deep learning computer vision model for real-time road hazard & pothole detection using custom dataset.",
+    name: "Event-management-System",
+    url: "https://github.com/Mridul3636/Event-management-System.git",
+    description: "Full-stack event planning, venue coordination, and ticket booking web platform with automated invoicing.",
+    language: "JavaScript / Node.js",
+    stars: 19,
+    forks: 4,
+    languagesBreakdown: [
+      { name: "JavaScript", percent: 68, color: "#f7df1e" },
+      { name: "Node.js", percent: 20, color: "#3c873a" },
+      { name: "CSS", percent: 12, color: "#e34f26" }
+    ]
+  },
+  {
+    name: "Event_Management_System-Decorator_Lagbe",
+    url: "https://github.com/Mridul3636/Event_Management_System-Decorator_Lagbe.git",
+    description: "Specialized event decoration, stage lighting, and vendor quotation matching marketplace platform.",
+    language: "JavaScript / Python",
+    stars: 16,
+    forks: 3,
+    languagesBreakdown: [
+      { name: "JavaScript / React", percent: 58, color: "#f7df1e" },
+      { name: "Python / YOLO", percent: 28, color: "#3572A5" },
+      { name: "CSS", percent: 14, color: "#e34f26" }
+    ]
+  },
+  {
+    name: "YoloV11-Model-for-Pothole-Detection",
+    url: "https://github.com/Mridul3636/YoloV11-Model-for-Pothole-Detection",
+    description: "Deep learning computer vision research model for real-time road hazard & pothole detection using custom dataset.",
     language: "Python / PyTorch",
     stars: 24,
     forks: 5,
     languagesBreakdown: [
-      { name: "Python", percent: 85, color: "#3572A5" },
-      { name: "Jupyter", percent: 15, color: "#da5b0b" }
+      { name: "Python", percent: 88, color: "#3572A5" },
+      { name: "Jupyter", percent: 12, color: "#da5b0b" }
     ]
   },
   {
-    name: "IoT-Intrusion-Detection-CNN-GRU",
-    url: "https://github.com/Mridul3636",
-    description: "Probabilistic IoT Intrusion Detection System using CNN-GRU with Blockchain-based security architecture.",
-    language: "Python / TensorFlow",
-    stars: 18,
-    forks: 4,
+    name: "EMP-Wiki",
+    url: "https://github.com/Mridul3636/EMP-Wiki",
+    description: "Documentation, system architecture blueprints, and API schemas for Employee Max Portal.",
+    language: "Markdown / Docs",
+    stars: 12,
+    forks: 2,
     languagesBreakdown: [
-      { name: "Python", percent: 75, color: "#3572A5" },
-      { name: "Smart Contracts", percent: 25, color: "#aa6746" }
+      { name: "Markdown", percent: 75, color: "#083fa1" },
+      { name: "TypeScript", percent: 25, color: "#3178c6" }
     ]
   },
   {
-    name: "DevPulse-SQA-Framework",
-    url: "https://github.com/Mridul3636",
-    description: "Automated API regression test framework and Postman runner collections developed during SQA residency.",
-    language: "JavaScript / Postman",
-    stars: 14,
-    forks: 3,
+    name: "Mridul_Portfolio",
+    url: "https://github.com/Mridul3636/Mridul_Portfolio",
+    description: "Production personal developer universe built with React, TypeScript, Tailwind CSS, and Web Audio API.",
+    language: "TypeScript / React",
+    stars: 32,
+    forks: 7,
     languagesBreakdown: [
-      { name: "JavaScript", percent: 70, color: "#f7df1e" },
-      { name: "JSON", percent: 30, color: "#292929" }
+      { name: "TypeScript", percent: 72, color: "#3178c6" },
+      { name: "Tailwind CSS", percent: 20, color: "#38bdf8" },
+      { name: "HTML", percent: 8, color: "#e34f26" }
     ]
   }
 ];

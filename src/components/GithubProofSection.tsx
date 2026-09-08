@@ -40,11 +40,11 @@ export const GithubProofSection: React.FC = () => {
   };
 
   const recentCommits = [
-    { repo: 'Siirham_Website', message: 'feat(canvas): add fabric.js dynamic A3/A2 print bounding box calculator', time: '2 hours ago', hash: 'e48a1c9' },
-    { repo: 'Siirham_Website', message: 'fix(pathao-api): optimize bearer token auto-refresh lifecycle', time: 'Yesterday', hash: '9b2c3f1' },
-    { repo: 'Siirham_Website', message: 'feat(telegram-webhook): format instant order dispatch payload with inline actions', time: '3 days ago', hash: '7a1d5e2' },
-    { repo: 'Nexus-ERP-Suite', message: 'refactor(rbac): implement atomic SQL transaction locks on stock depletion', time: '5 days ago', hash: '3c8e4a9' },
-    { repo: 'DevPulse-QA', message: 'test(api): add automated postman regression suite with JWT chaining', time: 'Last week', hash: '1f9a6d0' },
+    { repo: 'Siirham-Website', message: 'feat(canvas): add fabric.js dynamic DTF print bounding box pricing', time: '2 hours ago', hash: 'e48a1c9' },
+    { repo: 'EMP-Wiki', message: 'docs(architecture): add QR-code attendance and payroll calculation workflow', time: 'Yesterday', hash: '9b2c3f1' },
+    { repo: 'Event-management-System', message: 'feat(booking): implement real-time seat reservation & automated invoice generator', time: '3 days ago', hash: '7a1d5e2' },
+    { repo: 'Event_Management_System-Decorator_Lagbe', message: 'feat(quotation): add vendor quotation matching engine & stage showcase', time: '5 days ago', hash: '3c8e4a9' },
+    { repo: 'YoloV11-Model-for-Pothole-Detection', message: 'feat(training): optimize YOLOv11 model with custom road dataset', time: 'Last week', hash: '1f9a6d0' },
   ];
 
   return (
