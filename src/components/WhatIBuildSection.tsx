@@ -9,7 +9,9 @@ import {
   ArrowRight, 
   RefreshCw,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Check,
+  X
 } from 'lucide-react';
 import { capabilityCategories } from '../data/portfolioData';
 import { soundEngine } from '../utils/soundEngine';
@@ -426,18 +428,20 @@ export const WhatIBuildSection: React.FC<WhatIBuildSectionProps> = ({ onNavigate
                   <div className="p-3 rounded-xl bg-surface-850 border border-white/10 text-xs font-mono space-y-2">
                     <div className="flex items-center justify-between">
                       <span className="text-slate-300">Edit Product Prices</span>
-                      <span className={selectedRole !== 'staff' ? 'text-brand-emerald font-bold' : 'text-red-400'}>
-                        {selectedRole !== 'staff' ? '✓ ALLOWED' : '✕ LOCKED'}
+                      <span className={selectedRole !== 'staff' ? 'text-brand-emerald font-bold flex items-center gap-1' : 'text-red-400 flex items-center gap-1'}>
+                        {selectedRole !== 'staff' ? <><Check className="w-3.5 h-3.5" /> ALLOWED</> : <><X className="w-3.5 h-3.5" /> LOCKED</>}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-300">Dispatch Courier Consignment</span>
-                      <span className="text-brand-emerald font-bold">✓ ALLOWED</span>
+                      <span className="text-brand-emerald font-bold flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5" /> ALLOWED
+                      </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-300">View Profit Audit Logs</span>
-                      <span className={selectedRole === 'superadmin' ? 'text-brand-emerald font-bold' : 'text-red-400'}>
-                        {selectedRole === 'superadmin' ? '✓ ALLOWED' : '✕ LOCKED'}
+                      <span className={selectedRole === 'superadmin' ? 'text-brand-emerald font-bold flex items-center gap-1' : 'text-red-400 flex items-center gap-1'}>
+                        {selectedRole === 'superadmin' ? <><Check className="w-3.5 h-3.5" /> ALLOWED</> : <><X className="w-3.5 h-3.5" /> LOCKED</>}
                       </span>
                     </div>
                   </div>

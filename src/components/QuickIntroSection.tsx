@@ -5,7 +5,8 @@ import {
   Heart, 
   Target, 
   ArrowRight,
-  Zap
+  Zap,
+  Check
 } from 'lucide-react';
 import { personalInfo } from '../data/portfolioData';
 import { soundEngine } from '../utils/soundEngine';
@@ -230,14 +231,14 @@ export const QuickIntroSection: React.FC<QuickIntroSectionProps> = ({ onNavigate
               </p>
             </div>
             <div className="mt-8 flex flex-wrap gap-2.5">
-              <span className="px-3.5 py-1.5 rounded-xl bg-surface-900 border border-white/10 text-xs font-mono text-slate-200">
-                ✓ Full-Stack MVC
+              <span className="px-3.5 py-1.5 rounded-xl bg-surface-900 border border-white/10 text-xs font-mono text-slate-200 flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-brand-emerald" /> Full-Stack MVC
               </span>
-              <span className="px-3.5 py-1.5 rounded-xl bg-surface-900 border border-white/10 text-xs font-mono text-slate-200">
-                ✓ RESTful Integrations
+              <span className="px-3.5 py-1.5 rounded-xl bg-surface-900 border border-white/10 text-xs font-mono text-slate-200 flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-brand-emerald" /> RESTful Integrations
               </span>
-              <span className="px-3.5 py-1.5 rounded-xl bg-surface-900 border border-white/10 text-xs font-mono text-slate-200">
-                ✓ Automated SQA Testing
+              <span className="px-3.5 py-1.5 rounded-xl bg-surface-900 border border-white/10 text-xs font-mono text-slate-200 flex items-center gap-1.5">
+                <Check className="w-3.5 h-3.5 text-brand-emerald" /> Automated SQA Testing
               </span>
             </div>
           </div>
@@ -260,11 +261,11 @@ export const QuickIntroSection: React.FC<QuickIntroSectionProps> = ({ onNavigate
             </div>
             <div className="mt-8 flex items-center justify-between">
               <div className="flex items-center gap-3 text-xs font-mono text-slate-400">
-                <span>🎵 150 Tracks</span>
+                <span>150 Tracks</span>
                 <span>•</span>
-                <span>🎬 Cinema</span>
+                <span>Cinema</span>
                 <span>•</span>
-                <span>🍿 Anime</span>
+                <span>Anime</span>
               </div>
               <button
                 onClick={() => {

@@ -497,21 +497,21 @@ export const educationInfo = {
       institution: "Green University of Bangladesh",
       year: "Graduated in 2026",
       result: "CGPA: 3.28 / 4.00",
-      icon: "🎓"
+      icon: "Graduation"
     },
     {
       level: "Higher Secondary Certificate (HSC)",
       institution: "BCIC College",
       year: "2020",
       result: "GPA: 5.00 / 5.00",
-      icon: "🏛️"
+      icon: "College"
     },
     {
       level: "Secondary School Certificate (SSC)",
       institution: "Mirpur Bangla Higher Secondary School",
       year: "2018",
       result: "GPA: 5.00 / 5.00",
-      icon: "🏫"
+      icon: "School"
     }
   ],
   thesis: [

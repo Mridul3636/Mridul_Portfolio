@@ -17,7 +17,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
     {
       command: 'welcome',
       output: [
-        '⚡ MRIDUL DEVELOPER CLI [Version 2.4.0]',
+        'MRIDUL DEVELOPER CLI [Version 2.4.0]',
         '(c) Md. Minhazur Rahaman (Mridul). All rights reserved.',
         '',
         'Type "help" to see available terminal commands, or try "siirham", "skills", "matrix", "soundtrack".'
@@ -67,7 +67,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
       case 'agentic':
       case 'ai':
         response = [
-          '🤖 AGENTIC AI & AUTONOMOUS SWARM ORCHESTRATION:',
+          'AGENTIC AI & AUTONOMOUS SWARM ORCHESTRATION:',
           '  Specialization: Expert in Autonomous Multi-Agent Workflows & Neural Tool Calling',
           '  Frameworks: Antigravity AI, AutoGen, CrewAI, LangChain, OpenAI / Gemini / Claude APIs',
           '  Capabilities:',
@@ -113,7 +113,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
 
       case 'siirham':
         response = [
-          '🛍️ SIIRHAM APPAREL PLATFORM:',
+          'SIIRHAM APPAREL PLATFORM:',
           '  Role: Full-Stack Software Engineer & Lead Architect',
           '  Repo: https://github.com/Mridul3636/Siirham_Website',
           '  Highlights:',
@@ -135,7 +135,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
 
       case 'education':
         response = [
-          '🎓 ACADEMIC BACKGROUND:',
+          'ACADEMIC BACKGROUND:',
           `  Institution: ${personalInfo.university}`,
           `  Degree: ${personalInfo.degree}`,
           '  Location: Dhaka, Bangladesh'
@@ -153,29 +153,29 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
       case 'soundtrack':
       case 'music':
         response = [
-          '🎵 MY SOUNDTRACK (150 TRACKS):',
-          '  • 👑 Forever on Repeat (Michael Jackson - 25 tracks)',
-          '  • 🌙 Late Night (Cigarettes After Sex + The Weeknd + Lana Del Rey)',
-          '  • 🔥 Energy Mode (Phonk / Brazilian Phonk - 30 tracks)',
-          '  • 🩷 Soft Hours (Hindi / Indian Soft - 30 tracks)',
-          '  • 🎸 Indie Side (Arctic Monkeys)',
-          '  • ✨ Pop Rotation (Taylor Swift + Snoop Dogg)'
+          'MY SOUNDTRACK (150 TRACKS):',
+          '  • [Forever on Repeat] Michael Jackson - 25 tracks',
+          '  • [Late Night] Cigarettes After Sex + The Weeknd + Lana Del Rey',
+          '  • [Energy Mode] Phonk / Brazilian Phonk - 30 tracks',
+          '  • [Soft Hours] Hindi / Indian Soft - 30 tracks',
+          '  • [Indie Side] Arctic Monkeys',
+          '  • [Pop Rotation] Taylor Swift + Snoop Dogg'
         ];
         break;
 
       case 'anime':
         response = [
-          '🍿 ANIME FAVORITES:',
+          'ANIME FAVORITES:',
           '  Attack on Titan, Death Note, Vinland Saga, Steins;Gate, Hunter x Hunter, Cyberpunk: Edgerunners'
         ];
         break;
 
       case 'contact':
         response = [
-          `📧 EMAIL: ${personalInfo.email}`,
-          `📍 LOCATION: ${personalInfo.location}`,
-          `🔗 GITHUB: ${personalInfo.github}`,
-          `💼 LINKEDIN: ${personalInfo.linkedin}`
+          `EMAIL: ${personalInfo.email}`,
+          `LOCATION: ${personalInfo.location}`,
+          `GITHUB: ${personalInfo.github}`,
+          `LINKEDIN: ${personalInfo.linkedin}`
         ];
         break;
 

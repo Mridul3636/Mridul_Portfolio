@@ -55,7 +55,7 @@ export const WatchSection: React.FC = () => {
                   : 'bg-surface-900/60 border-white/[0.08] text-slate-400 hover:text-white hover:bg-surface-850'
               }`}
             >
-              {t === 'All' ? 'All Cinema' : t === 'Movie' ? '🎬 Feature Films' : '📺 TV Masterpieces'}
+              {t === 'All' ? 'All Cinema' : t === 'Movie' ? 'Feature Films' : 'TV Masterpieces'}
             </button>
           ))}
         </div>

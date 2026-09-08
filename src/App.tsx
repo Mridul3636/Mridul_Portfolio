@@ -17,9 +17,23 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { QuickDock } from './components/QuickDock';
 import { FloatingMusicPlayer } from './components/FloatingMusicPlayer';
+import { soundEngine } from './utils/soundEngine';
 
 export function App() {
   const [activeSection, setActiveSection] = useState<string>('hero');
+  const [currentThemeColor, setCurrentThemeColor] = useState<string>('#818cf8');
+  const [isPlayingMusic, setIsPlayingMusic] = useState<boolean>(false);
+
+  // Subscribe to SoundEngine for dynamic music theme changes across the website
+  useEffect(() => {
+    const unsubscribe = soundEngine.subscribe(state => {
+      if (state.currentTrack?.themeColor) {
+        setCurrentThemeColor(state.currentTrack.themeColor);
+      }
+      setIsPlayingMusic(state.isPlaying);
+    });
+    return unsubscribe;
+  }, []);
 
   // Smooth scroll handler
   const handleNavigate = (sectionId: string) => {
@@ -75,7 +89,29 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#030712] text-slate-100 selection:bg-brand-orange/30 selection:text-brand-orange relative">
+    <div className="min-h-screen bg-[#030712] text-slate-100 selection:bg-brand-orange/30 selection:text-brand-orange relative overflow-x-hidden">
+      {/* Dynamic Chromatic Atmosphere (Morphs with every Song Change) */}
+      <div 
+        className="fixed inset-0 pointer-events-none -z-10 overflow-hidden transition-all duration-1000 ease-out"
+        style={{
+          background: `radial-gradient(ellipse 80% 50% at 50% -10%, ${currentThemeColor}28, transparent 70%), radial-gradient(circle 600px at 90% 30%, ${currentThemeColor}18, transparent 70%), radial-gradient(circle 700px at 10% 70%, ${currentThemeColor}14, transparent 70%)`
+        }}
+      >
+        {/* Pulsing ambient orbs */}
+        <div 
+          className={`absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-full blur-[180px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-30 scale-105' : 'opacity-15 scale-100'
+          }`}
+          style={{ backgroundColor: currentThemeColor }}
+        />
+        <div 
+          className={`absolute top-2/3 right-[-10%] w-[600px] h-[600px] rounded-full blur-[200px] transition-all duration-1000 ${
+            isPlayingMusic ? 'opacity-25' : 'opacity-10'
+          }`}
+          style={{ backgroundColor: currentThemeColor }}
+        />
+      </div>
+
       {/* Top Floating Glass Navigation Header */}
       <Navbar activeSection={activeSection} onNavigate={handleNavigate} />
 

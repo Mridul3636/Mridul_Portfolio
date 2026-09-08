@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Truck, Send } from 'lucide-react';
+import { Truck, Send, Bot, Sparkles, Check } from 'lucide-react';
 import { soundEngine } from '../utils/soundEngine';
 import confetti from 'canvas-confetti';
 
@@ -240,11 +240,14 @@ export const LogisticsSimulator: React.FC = () => {
 
       {status === 'created' && (
         <div className="p-4 rounded-xl bg-brand-emerald/10 border border-brand-emerald/30 text-xs font-mono text-brand-emerald flex items-center justify-between">
-          <div>
-            <span className="font-bold block">✓ Consignment Successfully Created!</span>
-            <span>Consignment ID: {consignmentId} • Status: In Review → Assigned to Rider</span>
+          <div className="flex items-center gap-2">
+            <Check className="w-4 h-4 shrink-0" />
+            <div>
+              <span className="font-bold block">Consignment Successfully Created</span>
+              <span>Consignment ID: {consignmentId} • Status: In Review → Assigned to Rider</span>
+            </div>
           </div>
-          <span className="px-2.5 py-1 rounded bg-brand-emerald text-black font-bold">
+          <span className="px-2.5 py-1 rounded bg-brand-emerald text-black font-bold text-[10px]">
             LIVE
           </span>
         </div>
@@ -294,7 +297,7 @@ export const TelegramErpSimulator: React.FC = () => {
       <div className="max-w-md mx-auto p-5 rounded-2xl bg-[#17212b] border border-white/10 text-white space-y-3 shadow-2xl">
         <div className="flex items-center gap-3 pb-2 border-b border-white/10">
           <div className="w-8 h-8 rounded-full bg-brand-sky flex items-center justify-center text-black font-bold text-xs">
-            🤖
+            <Bot className="w-4 h-4 text-black" />
           </div>
           <div>
             <span className="text-xs font-bold block">SIIRHAM ERP Bot (@siirham_dispatch_bot)</span>
@@ -303,11 +306,13 @@ export const TelegramErpSimulator: React.FC = () => {
         </div>
 
         <div className="text-xs font-mono space-y-1.5 text-slate-200">
-          <div className="text-brand-yellow font-bold">🚨 NEW ORDER RECEIVED!</div>
-          <div>📦 Order ID: <span className="text-white font-bold">{orders[0].id}</span></div>
-          <div>👤 Customer: {orders[0].customer} ({orders[0].phone})</div>
-          <div>👕 Item: {orders[0].item}</div>
-          <div>💵 COD Collectable: <span className="text-brand-emerald font-bold">{orders[0].cod}</span></div>
+          <div className="text-brand-yellow font-bold uppercase tracking-wider text-[11px] flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" /> NEW ORDER RECEIVED!
+          </div>
+          <div>Order ID: <span className="text-white font-bold">{orders[0].id}</span></div>
+          <div>Customer: {orders[0].customer} ({orders[0].phone})</div>
+          <div>Item: {orders[0].item}</div>
+          <div>COD Collectable: <span className="text-brand-emerald font-bold">{orders[0].cod}</span></div>
         </div>
 
         <div className="grid grid-cols-2 gap-2 pt-2">
@@ -318,13 +323,13 @@ export const TelegramErpSimulator: React.FC = () => {
             }}
             className="py-1.5 rounded-lg bg-[#2b5278] hover:bg-[#346696] text-[11px] font-mono font-bold text-white transition-colors"
           >
-            ✓ 1-Click Approve
+            1-Click Approve
           </button>
           <button 
             onClick={() => soundEngine.playClick()}
             className="py-1.5 rounded-lg bg-surface-800 hover:bg-surface-750 text-[11px] font-mono text-slate-300 transition-colors"
           >
-            📋 View DTF Mockup
+            View DTF Mockup
           </button>
         </div>
       </div>
@@ -387,7 +392,9 @@ export const InventoryMatrixSimulator: React.FC = () => {
 
       <div className="p-4 rounded-xl bg-surface-900 border border-white/10 text-xs font-mono text-slate-300 flex items-center justify-between">
         <span>SQL Atomic Transaction Locking: Ensures 0% overselling across 500+ active SKU variations.</span>
-        <span className="text-brand-emerald font-bold">✓ VERIFIED</span>
+        <span className="text-brand-emerald font-bold flex items-center gap-1">
+          <Check className="w-3.5 h-3.5" /> VERIFIED
+        </span>
       </div>
     </div>
   );

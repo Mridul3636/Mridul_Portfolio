@@ -9,7 +9,8 @@ import {
   X,
   Disc3,
   Sparkles,
-  ListMusic
+  ListMusic,
+  Music
 } from 'lucide-react';
 import { SpotifyIcon } from './Icons';
 import { allTracks, soundtrackPlaylists } from '../data/soundtrackData';
@@ -45,6 +46,18 @@ export const FloatingMusicPlayer: React.FC = () => {
     setTotalSeconds(parseDurationToSeconds(currentTrack.duration));
   }, [currentTrack]);
 
+  // Subscribe to central SoundEngine state for global sync
+  useEffect(() => {
+    const unsubscribe = soundEngine.subscribe(state => {
+      setIsPlaying(state.isPlaying);
+      const idx = allTracks.findIndex(t => t.id === state.currentTrack.id);
+      if (idx >= 0) {
+        setCurrentTrackIndex(idx);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   // Audio progression timer syncing with native audio
   useEffect(() => {
     let interval: number;
@@ -68,7 +81,7 @@ export const FloatingMusicPlayer: React.FC = () => {
     if (e) e.stopPropagation();
     soundEngine.playClick();
     if (!isPlaying) {
-      soundEngine.startMusic(currentTrack.title, currentTrack.id, currentTrack.previewUrl);
+      soundEngine.startMusic(currentTrack.title, currentTrack.id, currentTrack.previewUrl, currentTrack.themeColor, currentTrack.artist, currentTrack.coverUrl);
       setIsPlaying(true);
     } else {
       soundEngine.stopMusic();
@@ -83,7 +96,7 @@ export const FloatingMusicPlayer: React.FC = () => {
     setCurrentTrackIndex(idx >= 0 ? idx : 0);
     setPlaybackSeconds(0);
     setTotalSeconds(parseDurationToSeconds(selected.duration));
-    soundEngine.startMusic(selected.title, selected.id, selected.previewUrl);
+    soundEngine.startMusic(selected.title, selected.id, selected.previewUrl, selected.themeColor, selected.artist, selected.coverUrl);
     setIsPlaying(true);
   };
 
@@ -96,7 +109,7 @@ export const FloatingMusicPlayer: React.FC = () => {
     const nextTr = allTracks[nextIdx];
     setTotalSeconds(parseDurationToSeconds(nextTr.duration));
     if (isPlaying) {
-      soundEngine.startMusic(nextTr.title, nextTr.id, nextTr.previewUrl);
+      soundEngine.startMusic(nextTr.title, nextTr.id, nextTr.previewUrl, nextTr.themeColor, nextTr.artist, nextTr.coverUrl);
     }
   };
 
@@ -109,7 +122,7 @@ export const FloatingMusicPlayer: React.FC = () => {
     const prevTr = allTracks[prevIdx];
     setTotalSeconds(parseDurationToSeconds(prevTr.duration));
     if (isPlaying) {
-      soundEngine.startMusic(prevTr.title, prevTr.id, prevTr.previewUrl);
+      soundEngine.startMusic(prevTr.title, prevTr.id, prevTr.previewUrl, prevTr.themeColor, prevTr.artist, prevTr.coverUrl);
     }
   };
 
@@ -480,7 +493,7 @@ export const FloatingMusicPlayer: React.FC = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-[10px]">
-                        🎵
+                        <Music className="w-3.5 h-3.5 text-slate-500" />
                       </div>
                     )}
                   </div>

@@ -1,13 +1,13 @@
 import type { TrackItem } from '../types';
 
 export const soundtrackPlaylists = [
-  { id: 'all', name: 'All 150 Tracks', icon: '✨', count: 150, color: 'from-pink-500 to-sky-400' },
-  { id: 'repeat', name: '👑 Forever on Repeat', icon: '👑', count: 25, color: 'from-amber-400 to-yellow-500' },
-  { id: 'late-night', name: '🌙 Late Night', icon: '🌙', count: 35, color: 'from-indigo-500 to-purple-600' },
-  { id: 'energy', name: '🔥 Energy Mode', icon: '🔥', count: 30, color: 'from-orange-500 to-red-600' },
-  { id: 'soft', name: '🩷 Soft Hours', icon: '🩷', count: 30, color: 'from-pink-400 to-rose-500' },
-  { id: 'indie', name: '🎸 Indie Side', icon: '🎸', count: 10, color: 'from-emerald-400 to-teal-500' },
-  { id: 'pop', name: '✨ Pop Rotation', icon: '✨', count: 20, color: 'from-sky-400 to-blue-500' },
+  { id: 'all', name: 'All 150 Tracks', icon: '', count: 150, color: 'from-pink-500 to-sky-400' },
+  { id: 'repeat', name: 'Forever on Repeat', icon: '', count: 25, color: 'from-amber-400 to-yellow-500' },
+  { id: 'late-night', name: 'Late Night', icon: '', count: 35, color: 'from-indigo-500 to-purple-600' },
+  { id: 'energy', name: 'Energy Mode', icon: '', count: 30, color: 'from-orange-500 to-red-600' },
+  { id: 'soft', name: 'Soft Hours', icon: '', count: 30, color: 'from-pink-400 to-rose-500' },
+  { id: 'indie', name: 'Indie Side', icon: '', count: 10, color: 'from-emerald-400 to-teal-500' },
+  { id: 'pop', name: 'Pop Rotation', icon: '', count: 20, color: 'from-sky-400 to-blue-500' },
 ];
 
 export const allTracks: TrackItem[] = [

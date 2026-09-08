@@ -11,7 +11,8 @@ import {
   Radio, 
   Disc3,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Music
 } from 'lucide-react';
 import { allTracks, soundtrackPlaylists } from '../data/soundtrackData';
 import type { TrackItem } from '../types';
@@ -97,6 +98,18 @@ export const SoundtrackSection: React.FC = () => {
     return matchesPlaylist && matchesSearch;
   });
 
+  // Subscribe to central SoundEngine state for global sync
+  useEffect(() => {
+    const unsubscribe = soundEngine.subscribe(state => {
+      setIsPlaying(state.isPlaying);
+      const matched = allTracks.find(t => t.id === state.currentTrack.id);
+      if (matched) {
+        setCurrentTrack(matched);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   // Audio progression timer
   useEffect(() => {
     let interval: number;
@@ -118,7 +131,7 @@ export const SoundtrackSection: React.FC = () => {
 
   const handlePlayTrack = (track: TrackItem) => {
     soundEngine.playChime();
-    soundEngine.startMusic(track.title, track.id, track.previewUrl);
+    soundEngine.startMusic(track.title, track.id, track.previewUrl, track.themeColor, track.artist, track.coverUrl);
     setCurrentTrack(track);
     setIsPlaying(true);
     setPlaybackSeconds(0);
@@ -131,7 +144,7 @@ export const SoundtrackSection: React.FC = () => {
       soundEngine.stopMusic();
       setIsPlaying(false);
     } else {
-      soundEngine.startMusic(currentTrack.title, currentTrack.id, currentTrack.previewUrl);
+      soundEngine.startMusic(currentTrack.title, currentTrack.id, currentTrack.previewUrl, currentTrack.themeColor, currentTrack.artist, currentTrack.coverUrl);
       setIsPlaying(true);
     }
   };
@@ -144,7 +157,7 @@ export const SoundtrackSection: React.FC = () => {
     setPlaybackSeconds(0);
     setTotalSeconds(parseDurationToSeconds(nextTrack.duration));
     if (isPlaying) {
-      soundEngine.startMusic(nextTrack.title, nextTrack.id, nextTrack.previewUrl);
+      soundEngine.startMusic(nextTrack.title, nextTrack.id, nextTrack.previewUrl, nextTrack.themeColor, nextTrack.artist, nextTrack.coverUrl);
     }
   };
 
@@ -156,7 +169,7 @@ export const SoundtrackSection: React.FC = () => {
     setPlaybackSeconds(0);
     setTotalSeconds(parseDurationToSeconds(prevTrack.duration));
     if (isPlaying) {
-      soundEngine.startMusic(prevTrack.title, prevTrack.id, prevTrack.previewUrl);
+      soundEngine.startMusic(prevTrack.title, prevTrack.id, prevTrack.previewUrl, prevTrack.themeColor, prevTrack.artist, prevTrack.coverUrl);
     }
   };
 
@@ -521,7 +534,7 @@ export const SoundtrackSection: React.FC = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-xs">
-                        🎵
+                        <Music className="w-4 h-4 text-slate-500" />
                       </div>
                     )}
                   </div>

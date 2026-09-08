@@ -1,9 +1,13 @@
-import React from 'react';
-import { Sparkles, Download, FileText, CheckCircle2, Award } from 'lucide-react';
+import { Sparkles, Download, FileText, CheckCircle2, Award, GraduationCap, Building2, School } from 'lucide-react';
 import { educationInfo, personalInfo } from '../data/portfolioData';
 import { soundEngine } from '../utils/soundEngine';
 
 export const EducationSection: React.FC = () => {
+  const getAcademicIcon = (idx: number) => {
+    if (idx === 0) return <GraduationCap className="w-5 h-5 text-brand-sky" />;
+    if (idx === 1) return <Building2 className="w-5 h-5 text-brand-emerald" />;
+    return <School className="w-5 h-5 text-brand-amber" />;
+  };
   return (
     <section 
       id="education" 
@@ -47,7 +51,9 @@ export const EducationSection: React.FC = () => {
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-2xl">{record.icon}</span>
+                  <div className="w-10 h-10 rounded-2xl bg-surface-900 border border-white/10 flex items-center justify-center shadow-md">
+                    {getAcademicIcon(idx)}
+                  </div>
                   <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-surface-900 border border-brand-sky/30 text-brand-sky">
                     {record.result}
                   </span>

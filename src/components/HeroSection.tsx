@@ -241,19 +241,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
                 <Bot className="w-3 h-3 text-amber-400" /> Agentic AI
               </span>
               <span className="px-3 py-1 rounded-lg bg-surface-900 border border-white/10 text-slate-300 text-[11px] font-mono font-medium flex items-center gap-1">
-                ⚡ FastAPI
+                FastAPI
               </span>
               <span className="px-3 py-1 rounded-lg bg-surface-900 border border-white/10 text-slate-300 text-[11px] font-mono font-medium flex items-center gap-1">
-                🐍 Python
+                Python
               </span>
               <span className="px-3 py-1 rounded-lg bg-surface-900 border border-white/10 text-slate-300 text-[11px] font-mono font-medium flex items-center gap-1">
-                ⚛ React
+                React
               </span>
               <span className="px-3 py-1 rounded-lg bg-surface-900 border border-white/10 text-slate-300 text-[11px] font-mono font-medium flex items-center gap-1">
-                🐘 PostgreSQL
+                PostgreSQL
               </span>
               <span className="px-3 py-1 rounded-lg bg-surface-900 border border-white/10 text-slate-300 text-[11px] font-mono font-medium flex items-center gap-1">
-                🚀 Node.js
+                Node.js
               </span>
             </div>
 
@@ -289,7 +289,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
 
               {/* Code Snippet */}
               <div className="p-5 font-mono text-xs text-slate-300 space-y-1.5 leading-relaxed bg-[#050914]">
-                <div className="text-slate-500">// 🤖 Autonomous Multi-Agent Orchestration</div>
+                <div className="text-slate-500">// Autonomous Multi-Agent Orchestration</div>
                 <div><span className="text-pink-400">async function</span> <span className="text-sky-400 font-bold">deployAgenticSystem</span>() {'{'}</div>
                 <div className="pl-4"><span className="text-purple-400">const</span> swarm = <span className="text-amber-400">new</span> AgentSwarm({'{'} memory: <span className="text-emerald-400">"pgvector"</span> {'}'});</div>
                 <div className="pl-4"><span className="text-purple-400">await</span> swarm.<span className="text-sky-300">orchestrate</span>({'{'}</div>

@@ -1,15 +1,110 @@
+export interface SoundEngineTrack {
+  id: number;
+  title: string;
+  artist: string;
+  duration?: string;
+  themeColor?: string;
+  coverUrl?: string;
+  previewUrl?: string;
+  playlistCategory?: string;
+}
+
+export interface SoundEngineState {
+  isPlaying: boolean;
+  isMuted: boolean;
+  currentTrack: SoundEngineTrack;
+  currentTime: number;
+  duration: number;
+  volume: number;
+  themeColor: string;
+}
+
+type StateListener = (state: SoundEngineState) => void;
+
 class SoundEngine {
   private ctx: AudioContext | null = null;
   private isMuted: boolean = false;
   private musicGainNode: GainNode | null = null;
   private musicTimer: number | null = null;
   private isCurrentlyPlayingMusic: boolean = false;
-  private currentVolume: number = 0.5;
-  private currentTrackTitle: string = '';
+  private currentVolume: number = 0.8;
+  
+  private currentTrack: SoundEngineTrack = {
+    id: 1,
+    title: 'Apocalypse',
+    artist: 'Cigarettes After Sex',
+    duration: '4:50',
+    themeColor: '#818cf8',
+    coverUrl: 'https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/b3/5e/0f/b35e0fbe-2370-fc48-0f0c-977525e93bf2/720841214601_Cover.jpg/600x600bb.jpg',
+    playlistCategory: 'Late Night'
+  };
+
+  private listeners: Set<StateListener> = new Set();
+  private audioPlayer: HTMLAudioElement | null = null;
 
   constructor() {
-    // Lazy initialize on first user gesture
+    // Initial theme variables
+    if (typeof window !== 'undefined') {
+      this.updateThemeVariables(this.currentTrack.themeColor || '#818cf8');
+    }
   }
+
+  // =========================================================================
+  // STATE SUBSCRIPTION & EVENT BROADCASTING
+  // =========================================================================
+
+  public subscribe(listener: StateListener): () => void {
+    this.listeners.add(listener);
+    // Send initial snapshot
+    listener(this.getState());
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  public getState(): SoundEngineState {
+    const time = this.getAudioTime();
+    return {
+      isPlaying: this.isCurrentlyPlayingMusic,
+      isMuted: this.isMuted,
+      currentTrack: this.currentTrack,
+      currentTime: time.current,
+      duration: time.duration,
+      volume: Math.round(this.currentVolume * 100),
+      themeColor: this.currentTrack.themeColor || '#818cf8'
+    };
+  }
+
+  private notify() {
+    const state = this.getState();
+    this.listeners.forEach(cb => {
+      try {
+        cb(state);
+      } catch (err) {
+        console.error('SoundEngine listener error:', err);
+      }
+    });
+  }
+
+  // =========================================================================
+  // DYNAMIC BACKGROUND THEME GLOW SYSTEM
+  // =========================================================================
+
+  public updateThemeVariables(themeHex: string) {
+    if (typeof document === 'undefined') return;
+    const hex = themeHex || '#818cf8';
+    
+    // Set custom CSS variables for full page ambient lighting
+    const root = document.documentElement;
+    root.style.setProperty('--theme-glow-accent', hex);
+    root.style.setProperty('--theme-glow-1', `${hex}33`); // 20% opacity primary aura
+    root.style.setProperty('--theme-glow-2', `${hex}22`); // 13% opacity secondary aura
+    root.style.setProperty('--theme-glow-3', `${hex}12`); // 7% subtle mesh aura
+  }
+
+  // =========================================================================
+  // WEB AUDIO CONTEXT & SFX
+  // =========================================================================
 
   public getContext(): AudioContext | null {
     if (typeof window === 'undefined') return null;
@@ -32,6 +127,7 @@ class SoundEngine {
     } else {
       this.playChime();
     }
+    this.notify();
     return this.isMuted;
   }
 
@@ -152,17 +248,24 @@ class SoundEngine {
   }
 
   // =========================================================================
-  // REAL AUDIO & HYBRID STREAMING ENGINE
+  // FULL SONG AUDIO PLAYBACK & STREAMING ENGINE
   // =========================================================================
-
-  private audioPlayer: HTMLAudioElement | null = null;
 
   private getAudioPlayer(): HTMLAudioElement {
     if (!this.audioPlayer && typeof window !== 'undefined') {
       this.audioPlayer = new Audio();
       this.audioPlayer.preload = 'auto';
-      this.audioPlayer.loop = true;
+      this.audioPlayer.loop = false; // We handle full progression
       this.audioPlayer.volume = this.currentVolume;
+
+      // Handle song completion -> loop or advance
+      this.audioPlayer.addEventListener('ended', () => {
+        if (this.audioPlayer) {
+          this.audioPlayer.currentTime = 0;
+          this.audioPlayer.play().catch(() => {});
+        }
+        this.notify();
+      });
     }
     return this.audioPlayer!;
   }
@@ -179,21 +282,27 @@ class SoundEngine {
         // pass
       }
     }
+    this.notify();
   }
 
   public isPlaying(): boolean {
     return this.isCurrentlyPlayingMusic;
   }
 
+  public getCurrentTrack(): SoundEngineTrack {
+    return this.currentTrack;
+  }
+
   public getCurrentTrackTitle(): string {
-    return this.currentTrackTitle;
+    return this.currentTrack.title;
   }
 
   public getAudioTime(): { current: number; duration: number } {
     if (this.audioPlayer) {
+      const dur = this.audioPlayer.duration;
       return {
         current: this.audioPlayer.currentTime || 0,
-        duration: this.audioPlayer.duration || 180
+        duration: isFinite(dur) && dur > 0 ? dur : 180
       };
     }
     return { current: 0, duration: 180 };
@@ -202,46 +311,93 @@ class SoundEngine {
   public seekAudio(seconds: number) {
     if (this.audioPlayer && isFinite(seconds)) {
       this.audioPlayer.currentTime = seconds;
+      this.notify();
     }
   }
 
-  public startMusic(title: string = 'Ambient Track', trackId: number = 1, customAudioUrl?: string) {
-    if (this.isMuted) return;
-    this.currentTrackTitle = title;
-    this.stopMusic();
+  /**
+   * Resolves the primary full-length audio URL for any track ID
+   */
+  private resolveFullAudioUrl(trackId: number, customAudioUrl?: string): string {
+    if (customAudioUrl && customAudioUrl.startsWith('/audio/')) {
+      return customAudioUrl;
+    }
+    const safeId = Math.abs(trackId) || 1;
+    // Downloaded full songs: track_1.webm through track_20.webm
+    const cycle20 = ((safeId - 1) % 20) + 1;
+    return `/audio/track_${cycle20}.webm`;
+  }
 
-    // Determine MP3 track URL
-    const trackNum = ((Math.abs(trackId || title.length) - 1) % 6) + 1;
-    const fallbackUrl = `/audio/track${trackNum}.mp3`;
-    const audioUrl = customAudioUrl || fallbackUrl;
+  /**
+   * Start playing a song with full-length audio and dynamic background theme change
+   */
+  public startMusic(
+    titleOrTrack: string | SoundEngineTrack = 'Ambient Track',
+    trackId: number = 1,
+    customAudioUrl?: string,
+    themeColor?: string,
+    artist?: string,
+    coverUrl?: string
+  ) {
+    if (this.isMuted) return;
+
+    if (typeof titleOrTrack === 'object') {
+      this.currentTrack = { ...titleOrTrack };
+    } else {
+      this.currentTrack = {
+        id: trackId,
+        title: titleOrTrack,
+        artist: artist || this.currentTrack.artist || 'Mridul Soundscape',
+        themeColor: themeColor || this.currentTrack.themeColor || '#818cf8',
+        coverUrl: coverUrl || this.currentTrack.coverUrl,
+        previewUrl: customAudioUrl
+      };
+    }
+
+    // Instantly update background theme lighting across the whole website!
+    this.updateThemeVariables(this.currentTrack.themeColor || '#818cf8');
+
+    // Stop current playback
+    this.stopMusic(false);
+
+    const primaryAudioUrl = this.resolveFullAudioUrl(this.currentTrack.id, this.currentTrack.previewUrl);
+    const fallbackMp3 = `/audio/track${((Math.abs(this.currentTrack.id) - 1) % 6) + 1}.mp3`;
+    const fallbackM4a = `/audio/track_${((Math.abs(this.currentTrack.id) - 1) % 20) + 1}.m4a`;
 
     try {
       const player = this.getAudioPlayer();
       player.volume = this.currentVolume;
-      player.src = audioUrl;
+      player.src = primaryAudioUrl;
 
       const playPromise = player.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
             this.isCurrentlyPlayingMusic = true;
+            this.notify();
           })
           .catch(() => {
-            // If customAudioUrl failed, fallback to local track
-            if (customAudioUrl && customAudioUrl !== fallbackUrl) {
-              player.src = fallbackUrl;
+            // Try m4a fallback
+            player.src = fallbackM4a;
+            player.play().then(() => {
+              this.isCurrentlyPlayingMusic = true;
+              this.notify();
+            }).catch(() => {
+              // Try mp3 fallback
+              player.src = fallbackMp3;
               player.play().then(() => {
                 this.isCurrentlyPlayingMusic = true;
+                this.notify();
               }).catch(() => {
                 this.startWebAudioSynth();
+                this.notify();
               });
-            } else {
-              this.startWebAudioSynth();
-            }
+            });
           });
       }
     } catch {
       this.startWebAudioSynth();
+      this.notify();
     }
   }
 
@@ -333,7 +489,7 @@ class SoundEngine {
     this.musicTimer = window.setInterval(playStep, 1600);
   }
 
-  public stopMusic() {
+  public stopMusic(shouldNotify: boolean = true) {
     this.isCurrentlyPlayingMusic = false;
     if (this.audioPlayer) {
       try {
@@ -351,6 +507,9 @@ class SoundEngine {
       } catch {
         // pass
       }
+    }
+    if (shouldNotify) {
+      this.notify();
     }
   }
 }
