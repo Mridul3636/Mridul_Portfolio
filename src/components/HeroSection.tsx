@@ -204,7 +204,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
 
               <a
                 href={personalInfo.cvUrl}
-                download="Mridul_CV.pdf"
+                download="Md_Minhazur_Rahaman_CV.pdf"
                 onClick={() => soundEngine.playSuccess()}
                 className="px-6 py-3.5 rounded-xl bg-surface-900/90 hover:bg-surface-850 text-white font-display font-semibold text-xs sm:text-sm border border-white/10 hover:border-brand-emerald/50 shadow-md transition-all flex items-center gap-2 backdrop-blur-md group"
               >

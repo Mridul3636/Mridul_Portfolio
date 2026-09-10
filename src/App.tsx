@@ -71,10 +71,24 @@ const getThemePalette = (colorHex: string): ThemePalette => {
 
 export function App() {
   const [activeSection, setActiveSection] = useState<string>('hero');
-  const [currentThemeColor, setCurrentThemeColor] = useState<string>('#818cf8');
+  const [currentThemeColor, setCurrentThemeColor] = useState<string>('#2dd4bf');
   const [isPlayingMusic, setIsPlayingMusic] = useState<boolean>(false);
 
   const palette = getThemePalette(currentThemeColor);
+
+  // Guarantee page loads from top and autoplays rotating entrance tracks:
+  // 1. Beat It (0:45) -> 2. Shape of You (0:06) -> 3. Базовый минимум (0:00) -> 4. Khat (0:00)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      
+      // Rotate through entrance songs on each visit / tab open
+      soundEngine.startNextEntranceTrack();
+    }
+  }, []);
 
   // Subscribe to SoundEngine for dynamic music theme changes across the website
   useEffect(() => {

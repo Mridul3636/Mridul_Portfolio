@@ -16,7 +16,7 @@ export const Footer: React.FC = () => {
         {/* Brand & Identity */}
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-lg bg-surface-900 border border-white/10 flex items-center justify-center overflow-hidden p-0.5">
-            <img src="/favicon.png" alt="Mridul Logo" className="w-full h-full object-contain" />
+            <img src="/favicon.png" alt="Md. Minhazur Rahaman Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <div className="flex items-center gap-2">

@@ -5,7 +5,7 @@ import confetti from 'canvas-confetti';
 
 export const CustomizerSimulator: React.FC = () => {
   const [side, setSide] = useState<'front' | 'back' | 'sleeve'>('front');
-  const [text, setText] = useState('MRIDUL / 3636');
+  const [text, setText] = useState('MINHAZUR / 3636');
   const [baseColor, setBaseColor] = useState<'#090d16' | '#1e293b' | '#7f1d1d' | '#f8fafc'>('#090d16');
   const [textColor, setTextColor] = useState('#ff6426');
   const [printSize, setPrintSize] = useState<'A6' | 'A4' | 'A3'>('A4');

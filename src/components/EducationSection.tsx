@@ -33,7 +33,7 @@ export const EducationSection: React.FC = () => {
 
           <a
             href={personalInfo.cvUrl}
-            download="Mridul_CV.pdf"
+            download="Md_Minhazur_Rahaman_CV.pdf"
             onClick={() => soundEngine.playSuccess()}
             className="self-start md:self-auto px-6 py-3.5 rounded-2xl bg-gradient-to-r from-brand-emerald via-teal-400 to-brand-sky text-black font-display font-bold text-xs sm:text-sm flex items-center gap-2.5 shadow-xl shadow-emerald-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
           >
@@ -136,12 +136,12 @@ export const EducationSection: React.FC = () => {
 
             <a
               href={personalInfo.cvUrl}
-              download="Mridul_CV.pdf"
+              download="Md_Minhazur_Rahaman_CV.pdf"
               onClick={() => soundEngine.playSuccess()}
               className="w-full py-4 rounded-2xl bg-brand-emerald text-black font-display font-black text-xs sm:text-sm tracking-wider uppercase flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 hover:opacity-95 hover:scale-[1.01] active:scale-[0.99] transition-all"
             >
               <Download className="w-4 h-4" />
-              <span>Download Mridul_CV.pdf</span>
+              <span>Download Official CV (PDF)</span>
             </a>
           </div>
 

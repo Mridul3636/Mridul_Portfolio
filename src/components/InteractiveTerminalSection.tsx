@@ -16,18 +16,25 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
     {
       command: 'welcome',
       output: [
-        'MRIDUL DEVELOPER CLI [Version 2.4.0]',
-        '(c) Md. Minhazur Rahaman (Mridul). All rights reserved.',
+        'MD. MINHAZUR RAHAMAN DEVELOPER CLI [Version 2.4.0]',
+        '(c) Md. Minhazur Rahaman. All rights reserved.',
         '',
         'Type "help" to see available terminal commands, or try "siirham", "skills", "matrix", "soundtrack".'
       ]
     }
   ]);
   const [isMatrixMode, setIsMatrixMode] = useState<boolean>(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const outputContainerRef = useRef<HTMLDivElement>(null);
+  const isInitialRender = useRef<boolean>(true);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (isInitialRender.current) {
+      isInitialRender.current = false;
+      return;
+    }
+    if (outputContainerRef.current) {
+      outputContainerRef.current.scrollTop = outputContainerRef.current.scrollHeight;
+    }
   }, [history]);
 
   const handleCommand = (e: React.FormEvent) => {
@@ -45,7 +52,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
         response = [
           'AVAILABLE COMMANDS:',
           '  agentic     - Multi-agent swarm orchestration & autonomous AI capabilities',
-          '  about       - Overview of Md. Minhazur Rahaman (Mridul)',
+          '  about       - Overview of Md. Minhazur Rahaman',
           '  skills      - Technical arsenal & production competencies',
           '  projects    - Signature platforms & systems built',
           '  siirham     - Deep-dive into SIIRHAM 2D Canvas Tailoring Studio',
@@ -80,7 +87,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
 
       case 'about':
         response = [
-          `NAME: ${personalInfo.name} (${personalInfo.nickname})`,
+          `NAME: ${personalInfo.name}`,
           `ROLE: ${personalInfo.role}`,
           `LOCATION: ${personalInfo.location}`,
           `STATUS: ${personalInfo.status}`,
@@ -184,11 +191,11 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
         break;
 
       case 'whoami':
-        response = 'guest@mridul-digital-universe:~$ [AUTHENTICATED VISITOR]';
+        response = 'guest@universe:~$ [AUTHENTICATED VISITOR]';
         break;
 
       case 'quote':
-        response = '"Zero bloat. Sub-second performance. Pixel perfection. Build things that actually work." — Mridul';
+        response = '"Zero bloat. Sub-second performance. Pixel perfection. Build things that actually work." — Md. Minhazur Rahaman';
         break;
 
       case 'clear':
@@ -249,7 +256,7 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
               <span className="w-3.5 h-3.5 rounded-full bg-yellow-500/80"></span>
               <span className="w-3.5 h-3.5 rounded-full bg-green-500/80"></span>
               <span className="text-xs font-mono text-slate-400 ml-2 sm:ml-3 truncate max-w-[200px] sm:max-w-none">
-                mridul@universe: ~/portfolio/cli
+                minhazur@universe: ~/portfolio/cli
               </span>
             </div>
 
@@ -265,11 +272,11 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
           </div>
 
           {/* Terminal Output Area */}
-          <div className="p-4 sm:p-8 max-h-[360px] sm:max-h-[420px] overflow-y-auto space-y-3 sm:space-y-4 text-xs sm:text-sm">
+          <div ref={outputContainerRef} className="p-4 sm:p-8 max-h-[360px] sm:max-h-[420px] overflow-y-auto space-y-3 sm:space-y-4 text-xs sm:text-sm">
             {history.map((item, idx) => (
               <div key={idx} className="space-y-1.5">
                 <div className="flex items-center gap-2 text-brand-sky font-bold">
-                  <span className="text-brand-orange">mridul@universe:~$</span>
+                  <span className="text-brand-orange">minhazur@universe:~$</span>
                   <span>{item.command}</span>
                 </div>
                 {Array.isArray(item.output) ? (
@@ -283,13 +290,12 @@ export const InteractiveTerminalSection: React.FC<TerminalProps> = () => {
                 )}
               </div>
             ))}
-            <div ref={bottomRef} />
           </div>
 
           {/* Terminal Input Line */}
           <form onSubmit={handleCommand} className="flex items-center px-4 sm:px-8 py-3.5 sm:py-5 border-t border-white/10 bg-surface-950">
             <span className="text-brand-orange font-bold text-xs sm:text-sm mr-2 sm:mr-3 shrink-0">
-              mridul@universe:~$
+              minhazur@universe:~$
             </span>
             <input
               type="text"

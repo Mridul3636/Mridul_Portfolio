@@ -86,7 +86,7 @@ export const QuickIntroSection: React.FC<QuickIntroSectionProps> = ({ onNavigate
               <span>02 // QUICK INTRODUCTION</span>
             </div>
             <h2 className="font-funky font-black text-3xl sm:text-4xl lg:text-5xl text-white tracking-tight">
-              Who is Mridul?
+              Who is Md. Minhazur Rahaman?
             </h2>
           </div>
           <p className="text-slate-400 font-sans text-xs sm:text-sm max-w-lg leading-relaxed">

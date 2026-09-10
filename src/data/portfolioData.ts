@@ -2,7 +2,7 @@ import type { CapabilityCategory, ExperienceItem, ArsenalSkill, ProjectItem } fr
 
 export const personalInfo = {
   name: "Md. Minhazur Rahaman",
-  nickname: "Mridul",
+  nickname: "Md. Minhazur Rahaman",
   role: "Software Engineer & Intelligent Systems Specialist",
   statement: "I build robust web applications, autonomous agent workflows, responsive UI architectures, and intelligent deep learning systems.",
   address: "House-20, Lane-21, Block-A, Mirpur-10, Dhaka-1216, Bangladesh",

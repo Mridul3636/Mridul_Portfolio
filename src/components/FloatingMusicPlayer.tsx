@@ -26,8 +26,11 @@ export const FloatingMusicPlayer: React.FC = () => {
   });
   const [showQueue, setShowQueue] = useState<boolean>(true);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(0);
-  const [playbackSeconds, setPlaybackSeconds] = useState<number>(0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState<number>(() => {
+    const beatItIdx = allTracks.findIndex(t => t.id === 23);
+    return beatItIdx >= 0 ? beatItIdx : 0;
+  });
+  const [playbackSeconds, setPlaybackSeconds] = useState<number>(45);
   const [totalSeconds, setTotalSeconds] = useState<number>(180);
   const [volume, setVolume] = useState<number>(80);
   const [searchQuery, setSearchQuery] = useState<string>('');

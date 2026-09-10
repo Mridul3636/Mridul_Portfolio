@@ -116,10 +116,10 @@ export const WatchSection: React.FC = () => {
                   {media.synopsis}
                 </p>
 
-                {/* Mridul's Verdict */}
+                {/* Md. Minhazur Rahaman's Verdict */}
                 <div className="p-4 rounded-2xl bg-surface-900 border border-white/10 mb-5 shadow-inner">
                   <span className="text-[10px] font-mono text-brand-sky uppercase font-bold block mb-1 tracking-wider">
-                    Mridul's Take:
+                    Md. Minhazur Rahaman's Take:
                   </span>
                   <p className="text-xs sm:text-sm text-slate-200 font-sans leading-relaxed">
                     {media.mridulVerdict}

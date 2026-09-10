@@ -88,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
           : 'py-4 sm:py-6 bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 flex items-center justify-between">
+      <div className="w-full px-4 sm:px-8 md:px-10 lg:px-12 flex items-center justify-between">
         
         {/* Brand Logo & Name */}
         <button 
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
         >
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-brand-orange via-brand-pink to-brand-sky p-[1px] transition-transform duration-300 group-hover:scale-105 shrink-0">
             <div className="w-full h-full bg-[#070c18] rounded-[15px] flex items-center justify-center overflow-hidden p-1">
-              <img src="/favicon.png" alt="Mridul Logo" className="w-full h-full object-contain" />
+              <img src="/favicon.png" alt="Md. Minhazur Rahaman Logo" className="w-full h-full object-contain" />
             </div>
           </div>
           <div className="overflow-hidden">
@@ -145,10 +145,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
 
           <a
             href={personalInfo.cvUrl}
-            download="Mridul_CV.pdf"
+            download="Md_Minhazur_Rahaman_CV.pdf"
             onClick={() => soundEngine.playSuccess()}
             className="hidden md:flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-surface-900 border border-white/10 text-slate-200 hover:text-brand-emerald hover:border-brand-emerald/40 text-xs font-mono font-semibold transition-all shadow-sm group"
-            title="Download Mridul's CV"
+            title="Download CV"
           >
             <Download className="w-3.5 h-3.5 text-brand-emerald group-hover:scale-110 transition-transform" />
             <span>CV</span>
@@ -204,7 +204,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeSection, onNavigate }) => 
             <div className="grid grid-cols-2 gap-2 mb-3">
               <a
                 href={personalInfo.cvUrl}
-                download="Mridul_CV.pdf"
+                download="Md_Minhazur_Rahaman_CV.pdf"
                 onClick={() => {
                   soundEngine.playSuccess();
                   setMobileMenuOpen(false);

@@ -60,7 +60,7 @@ export const WhatIBuildSection: React.FC<WhatIBuildSectionProps> = ({ onNavigate
 
   // Interactive Micro-Demos State
   // 1. E-Commerce Demo state
-  const [promoCode, setPromoCode] = useState('MRIDUL20');
+  const [promoCode, setPromoCode] = useState('MINHAZUR20');
   const cartBase = 1200;
   const [appliedDiscount, setAppliedDiscount] = useState(20);
 
@@ -104,7 +104,7 @@ export const WhatIBuildSection: React.FC<WhatIBuildSectionProps> = ({ onNavigate
 
   const handleApplyPromo = () => {
     soundEngine.playSuccess();
-    if (promoCode.trim().toUpperCase() === 'MRIDUL20') {
+    if (promoCode.trim().toUpperCase() === 'MINHAZUR20') {
       setAppliedDiscount(20);
     } else {
       setAppliedDiscount(10);

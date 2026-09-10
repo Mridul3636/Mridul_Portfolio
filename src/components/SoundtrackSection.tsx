@@ -21,9 +21,12 @@ import { soundEngine } from '../utils/soundEngine';
 export const SoundtrackSection: React.FC = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [currentTrack, setCurrentTrack] = useState<TrackItem>(allTracks[0]);
+  const [currentTrack, setCurrentTrack] = useState<TrackItem>(() => {
+    const beatIt = allTracks.find(t => t.id === 23);
+    return beatIt || allTracks[0];
+  });
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [playbackSeconds, setPlaybackSeconds] = useState<number>(0);
+  const [playbackSeconds, setPlaybackSeconds] = useState<number>(45);
   const [totalSeconds, setTotalSeconds] = useState<number>(180);
   const [volume, setVolume] = useState<number>(80);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);

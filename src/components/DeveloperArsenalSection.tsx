@@ -278,10 +278,10 @@ export const DeveloperArsenalSection: React.FC = () => {
                 Category: {activeSkill.category}
               </span>
 
-              {/* How Mridul Uses It in Production */}
+              {/* How Md. Minhazur Rahaman Uses It in Production */}
               <div className="p-6 rounded-2xl bg-surface-900 border border-white/10 mb-8 shadow-inner">
                 <span className="text-xs font-mono text-brand-orange uppercase font-bold block mb-3">
-                  How Mridul Uses It in Production:
+                  How Md. Minhazur Rahaman Uses It in Production:
                 </span>
                 <p className="text-sm text-slate-200 font-sans leading-relaxed">
                   {activeSkill.howUsed}

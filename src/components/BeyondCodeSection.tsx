@@ -89,7 +89,7 @@ export const BeyondCodeSection: React.FC<BeyondCodeSectionProps> = ({ onNavigate
       color: 'from-rose-500 to-pink-600',
       accent: '#f43f5e',
       description: 'Consistent strength training, mental clarity, and discipline that translates directly into endurance during complex architectural problem solving.',
-      actionLabel: 'Connect with Mridul',
+      actionLabel: 'Connect with Md. Minhazur Rahaman',
       targetSection: 'contact'
     }
   ];
