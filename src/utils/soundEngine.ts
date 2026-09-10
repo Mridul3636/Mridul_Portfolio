@@ -210,8 +210,15 @@ class SoundEngine {
     if (this.isCurrentlyPlayingMusic) {
       this.stopMusic();
     } else {
-      if (this.audioPlayer && this.audioPlayer.src) {
-        const playPromise = this.audioPlayer.play();
+      const player = this.getAudioPlayer();
+      player.muted = false;
+      player.volume = this.currentVolume;
+      this.isMuted = false;
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume().catch(() => {});
+      }
+      if (player && player.src) {
+        const playPromise = player.play();
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
@@ -569,6 +576,7 @@ class SoundEngine {
     const player = this.getAudioPlayer();
     player.src = trackConfig.audioUrl;
     player.volume = this.currentVolume;
+    player.muted = false;
 
     const setAccurateStartTime = () => {
       if (trackConfig.startTime > 0) {
@@ -580,16 +588,11 @@ class SoundEngine {
 
     player.addEventListener('loadedmetadata', setAccurateStartTime, { once: true });
     player.addEventListener('canplay', setAccurateStartTime, { once: true });
+    setAccurateStartTime();
 
-    const removeAllGestureListeners = () => {
-      const events = ['mousemove', 'pointermove', 'pointerdown', 'mousedown', 'wheel', 'scroll', 'touchstart', 'touchmove', 'keydown', 'click', 'focus'];
-      events.forEach(evt => window.removeEventListener(evt, triggerUnmuteOnFirstGesture));
-    };
+    const activationEvents = ['click', 'pointerdown', 'mousedown', 'touchstart', 'keydown'];
 
-    const triggerUnmuteOnFirstGesture = () => {
-      removeAllGestureListeners();
-      
-      // Resume audio context if suspended
+    const unlockOnUserGesture = () => {
       if (this.ctx && this.ctx.state === 'suspended') {
         this.ctx.resume().catch(() => {});
       }
@@ -598,58 +601,45 @@ class SoundEngine {
       player.muted = false;
       player.volume = this.currentVolume;
       this.isMuted = false;
-      this.isCurrentlyPlayingMusic = true;
 
-      const playPromise = player.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setAccurateStartTime();
-            this.isCurrentlyPlayingMusic = true;
-            this.notify();
-          })
-          .catch(() => {});
+      const p = player.play();
+      if (p !== undefined) {
+        p.then(() => {
+          setAccurateStartTime();
+          this.isCurrentlyPlayingMusic = true;
+          this.isMuted = false;
+          activationEvents.forEach(e => window.removeEventListener(e, unlockOnUserGesture));
+          this.notify();
+        }).catch(() => {});
       }
-      this.notify();
     };
 
-    const attachGestureListeners = () => {
-      const events = ['mousemove', 'pointermove', 'pointerdown', 'mousedown', 'wheel', 'scroll', 'touchstart', 'touchmove', 'keydown', 'click', 'focus'];
-      events.forEach(evt => {
-        window.addEventListener(evt, triggerUnmuteOnFirstGesture, { passive: true });
-      });
-    };
-
-    // 1. First attempt: Direct Unmuted Autoplay
-    player.muted = false;
-    setAccurateStartTime();
+    // 1. First attempt: Direct unmuted play
     const directPlay = player.play();
-
     if (directPlay !== undefined) {
       directPlay
         .then(() => {
           setAccurateStartTime();
           this.isCurrentlyPlayingMusic = true;
+          this.isMuted = false;
           this.notify();
         })
         .catch(() => {
-          // 2. Browser blocked unmuted autoplay -> Start Muted instantly (100% permitted by Chrome/Edge/Safari)
-          player.muted = true;
-          setAccurateStartTime();
-          player.play().then(() => {
-            this.isCurrentlyPlayingMusic = true;
-            this.notify();
-          }).catch(() => {});
+          // Autoplay blocked by browser policy on fresh entry.
+          // Correctly keep state paused so UI shows Play button or ready state,
+          // and seamlessly start sound upon the VERY FIRST click/touch anywhere on the page!
+          this.isCurrentlyPlayingMusic = false;
+          this.notify();
 
-          // 3. Unmute smoothly on first cursor move, touch, scroll or keypress without needing to press play button!
-          attachGestureListeners();
+          activationEvents.forEach(e => {
+            window.addEventListener(e, unlockOnUserGesture, { passive: true });
+          });
         });
     } else {
       this.isCurrentlyPlayingMusic = true;
       this.notify();
     }
 
-    this.notify();
     return trackConfig;
   }
 
