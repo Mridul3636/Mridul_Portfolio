@@ -568,57 +568,87 @@ class SoundEngine {
 
     const player = this.getAudioPlayer();
     player.src = trackConfig.audioUrl;
-    player.currentTime = trackConfig.startTime;
+    player.volume = this.currentVolume;
 
-    const attemptAutoplay = () => {
-      try {
-        if (trackConfig.startTime > 0) {
+    const setAccurateStartTime = () => {
+      if (trackConfig.startTime > 0) {
+        try {
           player.currentTime = trackConfig.startTime;
-        }
-        const promise = player.play();
-        if (promise !== undefined) {
-          promise
-            .then(() => {
-              if (trackConfig.startTime > 0) {
-                player.currentTime = trackConfig.startTime;
-              }
-              this.isCurrentlyPlayingMusic = true;
-              this.notify();
-            })
-            .catch(() => {
-              // Autoplay policy prevented playback before interaction.
-              // Attach seamless one-time global interaction listeners
-              const triggerOnFirstGesture = () => {
-                window.removeEventListener('pointerdown', triggerOnFirstGesture);
-                window.removeEventListener('click', triggerOnFirstGesture);
-                window.removeEventListener('keydown', triggerOnFirstGesture);
-                window.removeEventListener('scroll', triggerOnFirstGesture);
-                window.removeEventListener('touchstart', triggerOnFirstGesture);
-
-                if (!this.isCurrentlyPlayingMusic) {
-                  if (trackConfig.startTime > 0) {
-                    player.currentTime = trackConfig.startTime;
-                  }
-                  player.play().then(() => {
-                    this.isCurrentlyPlayingMusic = true;
-                    this.notify();
-                  }).catch(() => {});
-                }
-              };
-
-              window.addEventListener('pointerdown', triggerOnFirstGesture, { once: true, passive: true });
-              window.addEventListener('click', triggerOnFirstGesture, { once: true, passive: true });
-              window.addEventListener('keydown', triggerOnFirstGesture, { once: true, passive: true });
-              window.addEventListener('scroll', triggerOnFirstGesture, { once: true, passive: true });
-              window.addEventListener('touchstart', triggerOnFirstGesture, { once: true, passive: true });
-            });
-        }
-      } catch {
-        // pass
+        } catch {}
       }
     };
 
-    attemptAutoplay();
+    player.addEventListener('loadedmetadata', setAccurateStartTime, { once: true });
+    player.addEventListener('canplay', setAccurateStartTime, { once: true });
+
+    const removeAllGestureListeners = () => {
+      const events = ['mousemove', 'pointermove', 'pointerdown', 'mousedown', 'wheel', 'scroll', 'touchstart', 'touchmove', 'keydown', 'click', 'focus'];
+      events.forEach(evt => window.removeEventListener(evt, triggerUnmuteOnFirstGesture));
+    };
+
+    const triggerUnmuteOnFirstGesture = () => {
+      removeAllGestureListeners();
+      
+      // Resume audio context if suspended
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume().catch(() => {});
+      }
+
+      setAccurateStartTime();
+      player.muted = false;
+      player.volume = this.currentVolume;
+      this.isMuted = false;
+      this.isCurrentlyPlayingMusic = true;
+
+      const playPromise = player.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setAccurateStartTime();
+            this.isCurrentlyPlayingMusic = true;
+            this.notify();
+          })
+          .catch(() => {});
+      }
+      this.notify();
+    };
+
+    const attachGestureListeners = () => {
+      const events = ['mousemove', 'pointermove', 'pointerdown', 'mousedown', 'wheel', 'scroll', 'touchstart', 'touchmove', 'keydown', 'click', 'focus'];
+      events.forEach(evt => {
+        window.addEventListener(evt, triggerUnmuteOnFirstGesture, { passive: true });
+      });
+    };
+
+    // 1. First attempt: Direct Unmuted Autoplay
+    player.muted = false;
+    setAccurateStartTime();
+    const directPlay = player.play();
+
+    if (directPlay !== undefined) {
+      directPlay
+        .then(() => {
+          setAccurateStartTime();
+          this.isCurrentlyPlayingMusic = true;
+          this.notify();
+        })
+        .catch(() => {
+          // 2. Browser blocked unmuted autoplay -> Start Muted instantly (100% permitted by Chrome/Edge/Safari)
+          player.muted = true;
+          setAccurateStartTime();
+          player.play().then(() => {
+            this.isCurrentlyPlayingMusic = true;
+            this.notify();
+          }).catch(() => {});
+
+          // 3. Unmute smoothly on first cursor move, touch, scroll or keypress without needing to press play button!
+          attachGestureListeners();
+        });
+    } else {
+      this.isCurrentlyPlayingMusic = true;
+      this.notify();
+    }
+
     this.notify();
     return trackConfig;
   }
