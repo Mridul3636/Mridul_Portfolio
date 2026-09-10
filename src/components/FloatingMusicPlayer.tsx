@@ -12,10 +12,11 @@ import {
   ListMusic,
   Music
 } from 'lucide-react';
-import { SpotifyIcon } from './Icons';
+import { SpotifyIcon, YouTubeIcon } from './Icons';
 import { allTracks, soundtrackPlaylists } from '../data/soundtrackData';
 import type { TrackItem } from '../types';
 import { soundEngine } from '../utils/soundEngine';
+import { MusicImporterModal } from './MusicImporterModal';
 
 export const FloatingMusicPlayer: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(() => {
@@ -36,6 +37,7 @@ export const FloatingMusicPlayer: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
+  const [isImporterOpen, setIsImporterOpen] = useState<boolean>(false);
 
   const currentTrack: TrackItem = allTracks[currentTrackIndex] || allTracks[0];
   const activeColor = currentTrack.themeColor || '#10b981';
@@ -429,7 +431,18 @@ export const FloatingMusicPlayer: React.FC = () => {
               <ListMusic className="w-3.5 h-3.5" />
               <span>ALL TRACKS ({filteredQueue.length} / {allTracks.length})</span>
             </div>
-            <span className="text-[10px] text-slate-400">Click any track to play</span>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                soundEngine.playClick();
+                setIsImporterOpen(true);
+              }}
+              className="flex items-center gap-1 px-2 py-0.5 rounded-lg bg-red-500/20 border border-red-500/30 text-red-300 hover:text-white hover:bg-red-500/30 text-[10px] font-mono transition-all cursor-pointer"
+              title="Download song & thumbnail from YouTube"
+            >
+              <YouTubeIcon className="w-3 h-3 text-red-400" />
+              <span>+ Import YT</span>
+            </button>
           </div>
 
           {/* Quick Search Inside Queue */}
@@ -558,6 +571,14 @@ export const FloatingMusicPlayer: React.FC = () => {
         </div>
       )}
 
+      {/* YouTube & Music Downloader Modal */}
+      <MusicImporterModal 
+        isOpen={isImporterOpen} 
+        onClose={() => setIsImporterOpen(false)}
+        onTrackAdded={(track) => {
+          handleSelectTrack(track.id);
+        }}
+      />
     </div>
   );
 };

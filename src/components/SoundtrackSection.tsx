@@ -14,9 +14,11 @@ import {
   ChevronRight,
   Music
 } from 'lucide-react';
+import { YouTubeIcon } from './Icons';
 import { allTracks, soundtrackPlaylists } from '../data/soundtrackData';
 import type { TrackItem } from '../types';
 import { soundEngine } from '../utils/soundEngine';
+import { MusicImporterModal } from './MusicImporterModal';
 
 export const SoundtrackSection: React.FC = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<string>('all');
@@ -33,6 +35,7 @@ export const SoundtrackSection: React.FC = () => {
   const playlistTabsRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState<boolean>(false);
   const [canScrollRight, setCanScrollRight] = useState<boolean>(true);
+  const [isImporterOpen, setIsImporterOpen] = useState<boolean>(false);
 
   const activeColor = currentTrack.themeColor || '#10b981';
 
@@ -224,16 +227,30 @@ export const SoundtrackSection: React.FC = () => {
             </p>
           </div>
 
-          {/* Search Input */}
-          <div className="relative w-full md:w-96">
-            <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search 150 tracks, artists, moods..."
-              className="w-full bg-surface-900 border border-white/10 rounded-2xl pl-12 pr-4 py-3.5 text-xs sm:text-sm font-mono text-white focus:outline-none focus:border-brand-pink shadow-lg"
-            />
+          {/* Search & YouTube Importer Controls */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+            <button
+              onClick={() => {
+                soundEngine.playClick();
+                setIsImporterOpen(true);
+              }}
+              className="flex items-center justify-center gap-2 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-red-600/20 via-surface-900 to-emerald-500/20 border border-emerald-400/40 text-white hover:border-emerald-400 hover:text-emerald-300 font-mono text-xs font-bold transition-all shadow-lg hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+              title="Download any YouTube video/song + original HD thumbnail"
+            >
+              <YouTubeIcon className="w-4 h-4 text-red-500" />
+              <span>+ Import YouTube Track</span>
+            </button>
+
+            <div className="relative w-full sm:w-80 md:w-88">
+              <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search 150 tracks, artists, moods..."
+                className="w-full bg-surface-900 border border-white/10 rounded-2xl pl-12 pr-4 py-3.5 text-xs sm:text-sm font-mono text-white focus:outline-none focus:border-brand-pink shadow-lg"
+              />
+            </div>
           </div>
         </div>
 
@@ -583,6 +600,15 @@ export const SoundtrackSection: React.FC = () => {
         </div>
 
       </div>
+
+      {/* YouTube & Music Downloader Modal */}
+      <MusicImporterModal 
+        isOpen={isImporterOpen} 
+        onClose={() => setIsImporterOpen(false)}
+        onTrackAdded={(track) => {
+          handlePlayTrack(track);
+        }}
+      />
     </section>
   );
 };
